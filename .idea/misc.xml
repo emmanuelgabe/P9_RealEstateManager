@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Openclassroom/P9/Base_RealEstateManager/RealEstateManager/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Openclassroom/P9/Base_RealEstateManager/RealEstateManager/app/src/main/res/layout/activity_second.xml" value="0.20520833333333333" />
+        <entry key="..\:/Openclassroom/P9/Base_RealEstateManager/RealEstateManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.39114583333333336" />
+        <entry key="..\:/Openclassroom/P9/Base_RealEstateManager/RealEstateManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.39114583333333336" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />

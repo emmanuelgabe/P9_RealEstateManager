@@ -18,7 +18,6 @@ class RealEstateFactoryUnitTest {
         val realEstate =
             RealEstateFactory(DateUtil(SimpleDateFormat("yyyy.MM.dd HH:mm:ss"))).createRealEstate(
                 id = null,
-                name = "FakeRealEstateName",
                 type = RealEstateType.APARTMENT,
                 price = 300000,
                 size = 40,

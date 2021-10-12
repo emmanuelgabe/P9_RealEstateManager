@@ -36,7 +36,7 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
 
         return RealEstateViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.realestate_item,
+                R.layout.real_estate_item,
                 parent,
                 false
             ),

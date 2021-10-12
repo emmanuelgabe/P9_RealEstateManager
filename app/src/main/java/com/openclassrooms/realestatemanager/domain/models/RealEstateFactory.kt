@@ -10,7 +10,6 @@ import java.util.*
 class RealEstateFactory constructor(private val dateUtil: DateUtil) {
     fun createRealEstate(
         id: String? = null,
-        name: String,
         type: RealEstateType,
         price: Int,
         size: Int,
@@ -32,7 +31,6 @@ class RealEstateFactory constructor(private val dateUtil: DateUtil) {
     ): RealEstate {
         return RealEstate(
             id = id ?: UUID.randomUUID().toString(),
-            name = name,
             type = type,
             price = price,
             size = size,

@@ -7,7 +7,6 @@ import android.net.Uri
  */
 data class RealEstate(
     val id: String,
-    val name: String,
     val type: RealEstateType,
     val status: RealEstateStatus,
     val price: Int,

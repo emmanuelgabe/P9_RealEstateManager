@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:singleLine="true"
-            android:textColor="#4D9AC3"
+            android:textColor="@android:color/holo_blue_dark"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/real_estate_item_text_view_description"
@@ -43,7 +43,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/real_estate_item_text_view_description"
-            style="@style/TextViewBody1"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
@@ -58,7 +58,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/real_estate_item_text_view_place"
-            style="@style/TextViewBody1"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"

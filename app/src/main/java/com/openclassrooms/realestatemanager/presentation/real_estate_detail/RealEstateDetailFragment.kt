@@ -1,12 +1,12 @@
 package com.openclassrooms.realestatemanager.presentation.real_estate_detail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.openclassrooms.realestatemanager.R
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 
 class RealEstateDetailFragment : Fragment() {
 
@@ -20,13 +20,15 @@ class RealEstateDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.real_estate_detail_fragment, container, false)
+        return ComposeView(requireContext()).apply {
+            setContent {
+               //TODO RealEstateDetailScreen()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(RealEstateDetailViewModel::class.java)
-        // TODO: Use the ViewModel
     }
-
 }

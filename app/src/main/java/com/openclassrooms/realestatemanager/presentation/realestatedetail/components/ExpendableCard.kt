@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.presentation.real_estate_detail.components
+package com.openclassrooms.realestatemanager.presentation.realestatedetail.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -11,7 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.TextUnit
 
 @Composable
 fun ExpandableCard(
+    cardIsExpandedState: Boolean,
+    expandedCardTouchEvent: () -> Unit,
     title: String,
     titleFontSize: TextUnit = MaterialTheme.typography.h6.fontSize,
     titleFontWeight: FontWeight = FontWeight.Black,
@@ -31,9 +34,8 @@ fun ExpandableCard(
     descriptionFontSize: TextUnit = MaterialTheme.typography.subtitle1.fontSize,
     descriptionMaxLines: Int = 10
 ) {
-    var expandedState by remember { mutableStateOf(true) }
     val rotationState by animateFloatAsState(
-        targetValue = if (expandedState) 180f else 0f
+        targetValue = if (cardIsExpandedState) 180f else 0f
     )
     Card(
         modifier = Modifier
@@ -45,7 +47,7 @@ fun ExpandableCard(
                 )
             )
             .clickable {
-                expandedState = !expandedState
+                expandedCardTouchEvent()
             },
         shape = MaterialTheme.shapes.medium
     ) {
@@ -71,16 +73,14 @@ fun ExpandableCard(
                         .weight(1f)
                         .alpha(ContentAlpha.medium)
                         .rotate(rotationState),
-                    onClick = {
-                        expandedState = !expandedState
-                    }) {
+                    onClick = { expandedCardTouchEvent() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "Drop-Down Arrow"
                     )
                 }
             }
-            if (expandedState) {
+            if (cardIsExpandedState) {
                 Text(
                     text = description,
                     style = MaterialTheme.typography.body1,
@@ -94,12 +94,13 @@ fun ExpandableCard(
     }
 }
 
-
 @ExperimentalMaterialApi
 @Composable
 @Preview
 fun ExpandableCardPreview() {
     ExpandableCard(
+        cardIsExpandedState = true,
+        expandedCardTouchEvent = {},
         title = "My Title",
         description = "Apartment on the first floor of an elegant period building in Earl's Court.The property consists of a bright room with a kitchenette and bathroom. The location is excellent, with the numerous restaurants and shops of Earl's Court Road and the underground stations of Earl's Court, West Brompton and West Kensington within walking distance from the property."
     )

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.presentation.real_estate_detail.components
+package com.openclassrooms.realestatemanager.presentation.realestatedetail.components
 
 import android.net.Uri
 import androidx.compose.foundation.Image

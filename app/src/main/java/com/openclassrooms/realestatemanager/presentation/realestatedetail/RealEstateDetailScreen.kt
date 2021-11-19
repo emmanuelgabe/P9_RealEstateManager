@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.presentation.real_estate_detail
+package com.openclassrooms.realestatemanager.presentation.realestatedetail
 
 import android.content.res.Configuration
 import androidx.compose.foundation.*
@@ -22,19 +22,24 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.models.*
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
-import com.openclassrooms.realestatemanager.presentation.real_estate_detail.components.ExpandableCard
-import com.openclassrooms.realestatemanager.presentation.real_estate_detail.components.ImageListItem
+import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ExpandableCard
+import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ImageListItem
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
 import java.text.SimpleDateFormat
 
 @Preview
 @Composable
-fun RealEstateDetailScreen(@PreviewParameter(RealEstateProvider::class) realEstate: RealEstate) {
+fun RealEstateDetailScreen(
+    @PreviewParameter(RealEstateProvider::class) realEstate: RealEstate,
+    detailViewModel: RealEstateDetailViewModel = hiltViewModel()
+) {
     RealEstateManagerComposeTheme {
         BoxWithConstraints {
+            val state = detailViewModel.state.value
             val boxWithConstraintsScope = this
             val isTablet = (LocalContext.current.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
@@ -55,13 +60,15 @@ fun RealEstateDetailScreen(@PreviewParameter(RealEstateProvider::class) realEsta
                         isTablet = isTablet,
                         imagesUri = realEstate.photoUri,
                         description = realEstate.photoDescription,
-                        onImageClick = {  // TODO
+                        onImageClick = {  // TODO add full screen image display
                         })
                     Spacer(modifier = Modifier.height(12.dp))
                     if (isTablet) SpacerTablet()
                     Text(text = "Information", style = MaterialTheme.typography.h2)
                     Spacer(modifier = Modifier.height(12.dp))
                     RealEstateInformation(
+                        state.cardIsExpanded,
+                        { detailViewModel.onEvent(RealEstateDetailEvent.ExpandedCardTouch) },
                         maxWidth = boxWithConstraintsScope.maxWidth,
                         type = realEstate.type.toString(),
                         price = realEstate.price.toString(),
@@ -88,6 +95,8 @@ fun RealEstateDetailScreen(@PreviewParameter(RealEstateProvider::class) realEsta
 
 @Composable
 fun RealEstateInformation(
+    cardIsExpandedState: Boolean,
+    expandedCardTouchEvent: () -> Unit,
     maxWidth: Dp,
     type: String,
     price: String,
@@ -145,6 +154,8 @@ fun RealEstateInformation(
             }
         }
         ExpandableCard(
+            cardIsExpandedState = cardIsExpandedState,
+            expandedCardTouchEvent = expandedCardTouchEvent,
             title = "Description",
             description = description,
             titleFontWeight = FontWeight.Normal

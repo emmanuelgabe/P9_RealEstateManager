@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.databinding.RealEstateItemBinding
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 
-/**
- * Create by Emmanuel gabé on 12/10/2021.
- */
 class RealEstateListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val diffCallback = object : DiffUtil.ItemCallback<RealEstate>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<RealEstate>() {
 
         override fun areItemsTheSame(oldItem: RealEstate, newItem: RealEstate): Boolean {
             return oldItem.id == newItem.id
@@ -25,16 +23,15 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
             oldItem: RealEstate,
             newItem: RealEstate
         ): Boolean {
-            return oldItem.equals(newItem)
+            return oldItem == newItem
         }
 
     }
+
     private val differ = AsyncListDiffer(this, diffCallback)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        return RealEstateViewHolder(
+        return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.real_estate_item,
                 parent,
@@ -46,7 +43,7 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is RealEstateViewHolder -> {
+            is ViewHolder -> {
                 holder.bind(differ.currentList[position])
             }
         }
@@ -60,18 +57,24 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
         differ.submitList(list)
     }
 
-    class RealEstateViewHolder
+    inner class ViewHolder
     constructor(
         itemView: View,
         private val interaction: Interaction?
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: RealEstate) {
-            itemView.setOnClickListener {
-                interaction?.onItemSelected(layoutPosition, item)
-            }
+        private val binding = RealEstateItemBinding.bind(itemView)
 
-            TODO("bind view with data")
+        fun bind(realEstate: RealEstate) = with(itemView) {
+            itemView.setOnClickListener {
+                interaction?.onItemSelected(layoutPosition, realEstate)
+            }
+            // binding.realEstateItemImageView. // TODO
+            binding.realEstateItemTextViewDescription.text =
+                "${realEstate.type} - ${realEstate.size} - room: ${realEstate.room}"
+            binding.realEstateItemTextViewPrice.text = "${realEstate.price}$"
+            binding.realEstateItemTextViewPlace.text =
+                "${realEstate.address.postalCode} ${realEstate.address.city} ${realEstate.address.city}"
         }
     }
 

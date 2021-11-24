@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/realEstateDetailFragment">
+
+    <fragment
+        android:id="@+id/realEstateAddFragment"
+        android:name="com.openclassrooms.realestatemanager.presentation.realestateadd.RealEstateAddFragment"
+        android:label="Add real estate"
+        tools:layout="@layout/real_estate_add_fragment" />
+
+    <fragment
+        android:id="@+id/realEstateDetailFragment"
+        android:name="com.openclassrooms.realestatemanager.presentation.realestatedetail.RealEstateDetailFragment"
+        android:label="Detail real estate">
+        <argument
+            android:name="realEstateDetail"
+            app:nullable="true"
+            app:argType="com.openclassrooms.realestatemanager.domain.models.RealEstate" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/realEstateListFragment"
+        android:name="com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListFragment"
+        android:label="List real estate"
+        tools:layout="@layout/real_estate_list_fragment" />
+    <fragment
+        android:id="@+id/realEstateUpdateFragment"
+        android:name="com.openclassrooms.realestatemanager.presentation.realestateupdate.RealEstateUpdateFragment"
+        android:label="Update real estate"
+        tools:layout="@layout/real_estate_update_fragment" />
+    <action
+        android:id="@+id/action_global_realEstateAddFragment"
+        app:destination="@id/realEstateAddFragment" />
+
+    <action
+        android:id="@+id/action_global_realEstateUpdateFragment"
+        app:destination="@id/realEstateUpdateFragment" />
+    <action
+        android:id="@+id/action_global_realEstateDetailFragment"
+        app:destination="@id/realEstateDetailFragment" />
+
+
+</navigation>

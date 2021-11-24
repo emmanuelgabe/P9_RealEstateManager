@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateAddFragmentBinding
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
@@ -14,12 +14,7 @@ import com.openclassrooms.realestatemanager.domain.models.RealEstateType
 class RealEstateAddFragment : Fragment() {
 
     private lateinit var binding: RealEstateAddFragmentBinding
-
-    companion object {
-        fun newInstance() = RealEstateAddFragment()
-    }
-
-    private lateinit var viewModel: RealEstateAddViewModel
+    private val viewModel: RealEstateAddViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +26,6 @@ class RealEstateAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = RealEstateAddFragmentBinding.bind(view)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RealEstateAddViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onResume() {

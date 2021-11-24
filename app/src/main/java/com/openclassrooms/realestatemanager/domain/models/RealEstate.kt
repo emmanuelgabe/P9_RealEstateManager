@@ -1,10 +1,14 @@
 package com.openclassrooms.realestatemanager.domain.models
 
 import android.net.Uri
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /**
  * Create by Emmanuel gabé on 21/07/2021.
  */
+
+@Parcelize
 data class RealEstate(
     val id: String,
     val type: RealEstateType,
@@ -20,5 +24,6 @@ data class RealEstate(
     val lat: Double? = null,
     val lng: Double? = null,
     val entryDate: String,
-    val saleDate: String? = null
-)
+    val saleDate: String? = null,
+    val realEstateAgent: String
+) : Parcelable

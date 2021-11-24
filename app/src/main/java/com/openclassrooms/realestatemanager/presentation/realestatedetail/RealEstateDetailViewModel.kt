@@ -17,8 +17,4 @@ class RealEstateDetailViewModel() : ViewModel() {
             }
         }
     }
-/*
-    fun expandedCardStateEvent(expandedCardState: Boolean) {
-        _state.value.expandedCardState = expandedCardState
-    }*/
 }

@@ -27,7 +27,8 @@ class RealEstateFactory constructor(private val dateUtil: DateUtil) {
         lat: Double,
         lng: Double,
         entryDate: String? = null,
-        saleDate: String? = null
+        saleDate: String? = null,
+        realEstateAgent: String
     ): RealEstate {
         return RealEstate(
             id = id ?: UUID.randomUUID().toString(),
@@ -50,7 +51,8 @@ class RealEstateFactory constructor(private val dateUtil: DateUtil) {
             lat = lat,
             lng = lng,
             entryDate = entryDate ?: dateUtil.getCurrentTimestamp(),
-            saleDate = saleDate
+            saleDate = saleDate,
+            realEstateAgent = realEstateAgent
         )
     }
 }

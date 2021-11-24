@@ -3,10 +3,8 @@ package com.openclassrooms.realestatemanager.presentation.realestatedetail
 import android.content.res.Configuration
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,15 +12,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.models.*
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
@@ -31,62 +27,95 @@ import com.openclassrooms.realestatemanager.presentation.realestatedetail.compon
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
 import java.text.SimpleDateFormat
 
-@Preview
+
 @Composable
 fun RealEstateDetailScreen(
-    @PreviewParameter(RealEstateProvider::class) realEstate: RealEstate,
-    detailViewModel: RealEstateDetailViewModel = hiltViewModel()
+    realEstate: RealEstate,
+    onNavigate: (Int) -> Unit,
+    viewModelDetail: RealEstateDetailViewModel
 ) {
     RealEstateManagerComposeTheme {
-        BoxWithConstraints {
-            val state = detailViewModel.state.value
-            val boxWithConstraintsScope = this
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val state = viewModelDetail.state.value
             val isTablet = (LocalContext.current.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+            val boxWithConstraintsScope = this
             Surface(color = MaterialTheme.colors.background) {
                 Column(
-                    modifier = Modifier
-                        .padding(
-                            start = dimensionResource(R.dimen.padding_fragment_start_end),
-                            top = dimensionResource(R.dimen.margin_padding_size_medium),
-                            end = dimensionResource(R.dimen.padding_fragment_start_end),
-                            bottom = dimensionResource(R.dimen.margin_padding_size_medium)
-                        )
-                        .verticalScroll(rememberScrollState())
+                    modifier = Modifier.verticalScroll(rememberScrollState())
                 ) {
-                    Text(text = "Media", style = MaterialTheme.typography.h2)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    ImageListItem(
-                        isTablet = isTablet,
-                        imagesUri = realEstate.photoUri,
-                        description = realEstate.photoDescription,
-                        onImageClick = {  // TODO add full screen image display
-                        })
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (isTablet) SpacerTablet()
-                    Text(text = "Information", style = MaterialTheme.typography.h2)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    RealEstateInformation(
-                        state.cardIsExpanded,
-                        { detailViewModel.onEvent(RealEstateDetailEvent.ExpandedCardTouch) },
-                        maxWidth = boxWithConstraintsScope.maxWidth,
-                        type = realEstate.type.toString(),
-                        price = realEstate.price.toString(),
-                        description = realEstate.description,
-                        size = realEstate.size.toString(),
-                        rooms = realEstate.room.toString()
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (isTablet) SpacerTablet()
-                    Text(text = "Location", style = MaterialTheme.typography.h2)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    RealEstateLocation(isTablet, realEstate.address)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = "Real Estate entry at ${realEstate.entryDate}",
-                        style = MaterialTheme.typography.body2
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Box {
+                        Column(
+                            modifier = Modifier
+                                .padding(
+                                    start = dimensionResource(R.dimen.padding_fragment_start_end),
+                                    top = dimensionResource(R.dimen.margin_padding_size_medium),
+                                    end = dimensionResource(R.dimen.padding_fragment_start_end),
+                                    bottom = dimensionResource(R.dimen.margin_padding_size_medium)
+                                )
+                        ) {
+                            Text(text = "Media", style = MaterialTheme.typography.h2)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            ImageListItem(
+                                isTablet = isTablet,
+                                imagesUri = realEstate.photoUri,
+                                description = realEstate.photoDescription,
+                                onImageClick = {  // TODO add full screen image display
+                                })
+                            Spacer(modifier = Modifier.height(12.dp))
+                            if (isTablet) SpacerTablet()
+                            Text(text = "Information", style = MaterialTheme.typography.h2)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            RealEstateInformation(
+                                state.cardIsExpanded,
+                                { viewModelDetail.onEvent(RealEstateDetailEvent.ExpandedCardTouch) },
+                                maxWidth = boxWithConstraintsScope.maxWidth,
+                                type = realEstate.type.toString(),
+                                price = realEstate.price.toString(),
+                                description = realEstate.description,
+                                size = realEstate.size.toString(),
+                                rooms = realEstate.room.toString(),
+                                entryDate = realEstate.entryDate,
+                                saleDate = realEstate.saleDate,
+                                realEstateAgent = realEstate.realEstateAgent
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+                            if (isTablet) SpacerTablet()
+                            Text(text = "Location", style = MaterialTheme.typography.h2)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            RealEstateLocation(isTablet, realEstate.address)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            if (isTablet) SpacerTablet()
+                            Button(
+                                onClick = {
+                                    onNavigate(R.id.action_global_realEstateUpdateFragment)
+                                },
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .width(200.dp),
+                                shape = RoundedCornerShape(25.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = colorResource(R.color.blue400)
+                                )
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_edit_24),
+                                    contentDescription = "icon edit button"
+                                )
+                                Text(text = " Edit real estate")
+                            }
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
+                        if (realEstate.status == RealEstateStatus.AVAILABLE) {
+                            Image(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .size(240.dp),
+                                painter = painterResource(id = R.drawable.sold_banner),
+                                contentDescription = "real estate sold"
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -102,7 +131,10 @@ fun RealEstateInformation(
     price: String,
     description: String,
     size: String,
-    rooms: String
+    rooms: String,
+    entryDate: String,
+    saleDate: String?,
+    realEstateAgent: String
 ) {
     Column {
         Row(
@@ -160,6 +192,12 @@ fun RealEstateInformation(
             description = description,
             titleFontWeight = FontWeight.Normal
         )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = "Real Estate entry on ${entryDate.dropLast(8)}")
+        if (saleDate != null) {
+            Text(text = "Real Estate sold on ${entryDate.dropLast(8)}")
+        }
+        Text(text = "real estate agent ${realEstateAgent}")
     }
 }
 
@@ -223,6 +261,7 @@ class RealEstateProvider : PreviewParameterProvider<RealEstate> {
             status = RealEstateStatus.AVAILABLE,
             lat = 0.0,
             lng = 1.1,
+            realEstateAgent = "Sthéphane Dupont"
         )
     override val values: Sequence<RealEstate> = sequenceOf(fakeRealEstate)
 }

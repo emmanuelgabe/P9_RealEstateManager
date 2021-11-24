@@ -9,16 +9,37 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
         android:paddingStart="@dimen/padding_fragment_start_end"
         android:paddingTop="@dimen/margin_padding_size_medium"
         android:paddingEnd="@dimen/padding_fragment_start_end"
-        android:paddingBottom="@dimen/margin_padding_size_medium">
+        android:paddingBottom="@dimen/margin_padding_size_xxxlarge">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/real_estate_update_button_add_sale_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/real_estate_update_tv_information"
+            app:strokeColor="#CACACA"
+            app:strokeWidth="1dp" />
 
         <TextView
             android:id="@+id/real_estate_update_tv_information"
             style="@style/Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:background="@android:color/background_light"
+            android:paddingStart="@dimen/margin_padding_size_small"
+            android:paddingEnd="@dimen/margin_padding_size_small"
             android:text="@string/title_information"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +49,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="61dp"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="4dp"
             android:hint="@string/all_type"
@@ -54,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/real_estate_update_til_type"
             app:layout_constraintTop_toBottomOf="@id/real_estate_update_tv_information">
@@ -71,6 +94,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="61dp"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_small"
             android:layout_marginEnd="4dp"
             android:hint="@string/all_room"
@@ -95,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/real_estate_update_til_room"
             app:layout_constraintTop_toBottomOf="@+id/real_estate_update_til_type">
@@ -112,7 +137,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/real_estate_update_til_room">
 
@@ -131,8 +158,10 @@
             android:id="@+id/real_estate_update_til_real_estate_agent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/real_estate_update_til_description">
@@ -141,13 +170,13 @@
                 android:id="@+id/real_estate_update_tiet_real_estate_agent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_real_estate_agent" />
+                android:hint="@string/all_real_estate_agent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/real_estate_update_button_add_sale_date"
             style="@style/Button"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:layout_marginTop="@dimen/margin_padding_size_xxlarge"
             android:layout_marginEnd="4dp"
             android:text="@string/all_add_sale_date"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,19 +186,38 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/real_estate_update_button_add_picture"
             style="@style/Button"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
             android:layout_marginEnd="4dp"
             android:text="@string/all_add_picture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/real_estate_update_button_add_sale_date" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            app:cardBackgroundColor="#000093C4"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/real_estate_update_button_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/real_estate_update_tv_address"
+            app:strokeColor="#CACACA"
+            app:strokeWidth="1dp" />
+
         <TextView
             android:id="@+id/real_estate_update_tv_address"
             style="@style/Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:background="@android:color/background_light"
+            android:paddingStart="@dimen/margin_padding_size_small"
+            android:paddingEnd="@dimen/margin_padding_size_small"
             android:text="@string/title_address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/real_estate_update_button_add_picture" />
@@ -179,6 +227,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@id/real_estate_update_til_street_name"
@@ -199,6 +248,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/real_estate_update_til_street_number"
             app:layout_constraintTop_toTopOf="@id/real_estate_update_til_street_number">
@@ -216,6 +266,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_small"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@id/real_estate_update_til_city"
@@ -236,6 +287,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/real_estate_update_til_postal_code"
             app:layout_constraintTop_toTopOf="@id/real_estate_update_til_postal_code">
@@ -253,7 +305,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
             android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/real_estate_update_til_city">
 
@@ -266,12 +320,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/real_estate_update_button_update"
+            android:id="@+id/real_estate_update_button_add"
             style="@style/Button"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_xxlarge"
             android:layout_marginBottom="@dimen/margin_padding_size_medium"
             android:text="@string/real_estate_update_fragment_button_update"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/real_estate_update_til_country" />

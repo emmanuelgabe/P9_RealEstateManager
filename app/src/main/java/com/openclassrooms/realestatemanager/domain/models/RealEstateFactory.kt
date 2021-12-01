@@ -7,7 +7,8 @@ import java.util.*
 /**
  * Create by Emmanuel gabé on 17/09/2021.
  */
-class RealEstateFactory constructor(private val dateUtil: DateUtil) {
+class RealEstateFactory
+constructor(private val dateUtil: DateUtil) {
     fun createRealEstate(
         id: String? = null,
         type: RealEstateType,
@@ -28,7 +29,8 @@ class RealEstateFactory constructor(private val dateUtil: DateUtil) {
         lng: Double,
         entryDate: String? = null,
         saleDate: String? = null,
-        realEstateAgent: String
+        realEstateAgent: String,
+        nearbyInterest: List<NearbyInterest>? = null
     ): RealEstate {
         return RealEstate(
             id = id ?: UUID.randomUUID().toString(),
@@ -52,7 +54,8 @@ class RealEstateFactory constructor(private val dateUtil: DateUtil) {
             lng = lng,
             entryDate = entryDate ?: dateUtil.getCurrentTimestamp(),
             saleDate = saleDate,
-            realEstateAgent = realEstateAgent
+            realEstateAgent = realEstateAgent,
+            nearbyInterest = nearbyInterest
         )
     }
 }

@@ -16,4 +16,5 @@ enum class RealEstateType(val type: String) {
 
     override fun toString(): String {
         return type
-    }}
+    }
+}

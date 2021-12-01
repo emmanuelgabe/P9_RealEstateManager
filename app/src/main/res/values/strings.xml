@@ -18,4 +18,5 @@
     <string name="real_estate_update_fragment_button_update">Update real estate</string>
     <string name="all_real_estate_agent">Real estate agent</string>
     <string name="all_add_sale_date">Add sale date</string>
+    <string name="all_nearby_interest">Nearby interest</string>
 </resources>

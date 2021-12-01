@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.os.Build.VERSION
 import androidx.test.core.app.ApplicationProvider
-import com.openclassrooms.realestatemanager.Utils.*
+import com.openclassrooms.realestatemanager.utils.Utils.*
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test

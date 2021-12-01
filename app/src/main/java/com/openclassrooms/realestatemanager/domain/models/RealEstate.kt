@@ -25,5 +25,6 @@ data class RealEstate(
     val lng: Double? = null,
     val entryDate: String,
     val saleDate: String? = null,
-    val realEstateAgent: String
+    val realEstateAgent: String,
+    val nearbyInterest: List<NearbyInterest>?
 ) : Parcelable

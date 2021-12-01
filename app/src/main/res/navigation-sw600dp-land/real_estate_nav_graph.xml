@@ -17,8 +17,8 @@
         android:label="Detail real estate">
         <argument
             android:name="realEstateDetail"
-            app:nullable="true"
-            app:argType="com.openclassrooms.realestatemanager.domain.models.RealEstate" />
+            app:argType="com.openclassrooms.realestatemanager.domain.models.RealEstate"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -26,11 +26,18 @@
         android:name="com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListFragment"
         android:label="List real estate"
         tools:layout="@layout/real_estate_list_fragment" />
+
     <fragment
         android:id="@+id/realEstateUpdateFragment"
         android:name="com.openclassrooms.realestatemanager.presentation.realestateupdate.RealEstateUpdateFragment"
         android:label="Update real estate"
-        tools:layout="@layout/real_estate_update_fragment" />
+        tools:layout="@layout/real_estate_update_fragment">
+        <argument
+            android:name="realEstate"
+            app:argType="com.openclassrooms.realestatemanager.domain.models.RealEstate"
+            app:nullable="false" />
+    </fragment>
+
     <action
         android:id="@+id/action_global_realEstateAddFragment"
         app:destination="@id/realEstateAddFragment" />
@@ -38,6 +45,7 @@
     <action
         android:id="@+id/action_global_realEstateUpdateFragment"
         app:destination="@id/realEstateUpdateFragment" />
+
     <action
         android:id="@+id/action_global_realEstateDetailFragment"
         app:destination="@id/realEstateDetailFragment" />

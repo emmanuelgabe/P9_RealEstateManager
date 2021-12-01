@@ -9,9 +9,13 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateUpdateFragmentBinding
+import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
 import java.util.*
+import android.widget.MultiAutoCompleteTextView
+import android.widget.MultiAutoCompleteTextView.CommaTokenizer
+
 
 class RealEstateUpdateFragment : Fragment() {
     private lateinit var mRealEstate: RealEstate
@@ -70,7 +74,10 @@ class RealEstateUpdateFragment : Fragment() {
                 R.layout.dropdown_item,
                 resources.getStringArray(R.array.room_number)
             )
+        val nearbyInterest = ArrayAdapter(requireContext(),R.layout.dropdown_item,NearbyInterest.values())
         binding.realEstateUpdateActvType.setAdapter(typeAdapterAdapter)
         binding.realEstateUpdateActvRoom.setAdapter(roomAdapterAdapter)
+        binding.realEstateUpdateMactvNearbyInterest.setTokenizer(CommaTokenizer())
+        binding.realEstateUpdateMactvNearbyInterest.setAdapter(nearbyInterest)
     }
 }

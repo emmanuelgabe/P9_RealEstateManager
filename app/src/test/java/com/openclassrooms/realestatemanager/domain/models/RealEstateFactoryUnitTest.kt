@@ -31,6 +31,7 @@ class RealEstateFactoryUnitTest {
                 status = RealEstateStatus.AVAILABLE,
                 lat = 0.0,
                 lng = 1.1,
+                realEstateAgent = "martin Robert"
             )
         assert(realEstate is RealEstate)
         assertTrue(realEstate.id != null)

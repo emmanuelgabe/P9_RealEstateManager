@@ -48,7 +48,8 @@ class DataConverter {
     fun fromUriList(value: List<Uri>?): String? {
         return if (value == null) null
         else {
-            Gson().toJson(value)
+            val stringUri = value.map { it.toString() }
+            return Gson().toJson(stringUri)
         }
     }
 
@@ -56,8 +57,9 @@ class DataConverter {
     fun toUriList(value: String?): List<Uri>? {
         return if (value == null) null
         else {
-            val type = object : TypeToken<List<Uri>>() {}.type
-            Gson().fromJson(value, type)
+            val type = object : TypeToken<List<String>>() {}.type
+            val stringUri = Gson().fromJson(value, type) as List<String>
+            return stringUri.map { Uri.parse(it) }
         }
     }
 

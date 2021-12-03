@@ -10,7 +10,7 @@ import com.openclassrooms.realestatemanager.data.local.entity.RealEstateEntity
 interface RealEstateDao {
 
     @Query("SELECT * FROM real_estate_table")
-    fun getAllRealEstates(): List<RealEstateEntity>
+    suspend fun getAllRealEstates(): List<RealEstateEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRealEstate(realEstateEntity: RealEstateEntity)

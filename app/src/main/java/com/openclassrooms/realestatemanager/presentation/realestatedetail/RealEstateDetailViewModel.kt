@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 
 class RealEstateDetailViewModel() : ViewModel() {
 
-    private val _state = mutableStateOf(RealEstateDetailState())
-    val state: State<RealEstateDetailState>
+    private val _state = mutableStateOf(RealEstateDetailViewState())
+    val state: State<RealEstateDetailViewState>
         get() = _state
 
     fun onEvent(event: RealEstateDetailEvent) {

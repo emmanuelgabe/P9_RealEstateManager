@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.presentation.realestateadd
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -16,12 +17,14 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.MultiAutoCompleteTextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -32,6 +35,7 @@ import com.openclassrooms.realestatemanager.domain.models.RealEstateFactory
 import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
+import com.openclassrooms.realestatemanager.presentation.MainActivityViewModel
 import com.openclassrooms.realestatemanager.utils.sdk29AndUp
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -46,6 +50,7 @@ class RealEstateAddFragment : Fragment() {
     private val viewModel: RealEstateAddViewModel by viewModels()
     private val photoUriList = mutableListOf<Uri>()
     private val photoDescriptionList = mutableListOf<String>()
+    private val viewModelMainActivity: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,15 +93,17 @@ class RealEstateAddFragment : Fragment() {
 
                 viewModel.onEvent(AddRealEstateEvent.SaveRealEstate(newRealEstate))
                 Snackbar.make(binding.root, "real estate added", Snackbar.LENGTH_LONG).show()
+                viewModelMainActivity.getRealEstate()
+                hideKeyboard(binding.root)
                 val navController = Navigation.findNavController(
                     requireActivity(),
                     R.id.activity_main_fcv_nav_host_fragment
                 )
                 navController.navigateUp()
             }
-            binding.realEstateAddButtonAddPicture.setOnClickListener {
-                openGetContentActivity()
-            }
+        }
+        binding.realEstateAddButtonAddPicture.setOnClickListener {
+            openGetContentActivity()
         }
     }
 
@@ -296,5 +303,11 @@ class RealEstateAddFragment : Fragment() {
             binding.realEstateAddTietCountry.error = null
         }
         return fieldsIsNotEmpty
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

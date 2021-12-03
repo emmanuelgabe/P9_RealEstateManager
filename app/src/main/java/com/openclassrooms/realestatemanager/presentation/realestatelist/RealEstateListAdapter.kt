@@ -69,7 +69,10 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
             itemView.setOnClickListener {
                 interaction?.onItemSelected(layoutPosition, realEstate)
             }
-            // binding.realEstateItemImageView. // TODO
+            if (realEstate.photoUri.isNotEmpty()) {
+                binding.realEstateItemImageView.setImageURI(realEstate.photoUri[0])
+                binding.realEstateItemImageView.setClipToOutline(true)
+            }
             binding.realEstateItemTextViewDescription.text =
                 "${realEstate.type} - ${realEstate.size} - room: ${realEstate.room}"
             binding.realEstateItemTextViewPrice.text = "${realEstate.price}$"

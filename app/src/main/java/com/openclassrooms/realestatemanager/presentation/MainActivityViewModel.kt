@@ -1,12 +1,12 @@
 package com.openclassrooms.realestatemanager.presentation
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
 import com.openclassrooms.realestatemanager.domain.utils.Resource
-import com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListState
+import com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -19,8 +19,9 @@ class MainActivityViewModel
 @Inject constructor(
     private val realEstateUseCases: RealEstateUseCases
 ) : ViewModel() {
-    private val _state = mutableStateOf(RealEstateListState())
-    val state: State<RealEstateListState> = _state
+    private val _listViewState = MutableLiveData(RealEstateListViewState())
+    val listViewState: LiveData<RealEstateListViewState>
+        get() = _listViewState
 
     private var getRealEstatesJob: Job? = null
 
@@ -28,16 +29,15 @@ class MainActivityViewModel
         getRealEstate()
     }
 
-    private fun getRealEstate() {
+    fun getRealEstate() {
         getRealEstatesJob?.cancel()
         getRealEstatesJob = viewModelScope.launch {
             realEstateUseCases.getRealEstates()
                 .onEach { result ->
                     when (result) {
                         is Resource.Success -> {
-                            _state.value = state.value.copy(
-                                realEstates = result.data
-                            )
+                            _listViewState.value =
+                                RealEstateListViewState(realEstates = result.data ?: emptyList())
                         }
                     }
                 }.launchIn(this)

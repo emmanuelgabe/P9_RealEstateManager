@@ -22,4 +22,9 @@
         <item name="android:textColor">@android:color/holo_blue_dark</item>
         <item name="android:textStyle">normal</item>
     </style>
+    <!-- ShapeableImageView theme. (note that the parent matches the Base App theme) -->
+    <style name="ShapeAppearance.ImageView" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
 </resources>

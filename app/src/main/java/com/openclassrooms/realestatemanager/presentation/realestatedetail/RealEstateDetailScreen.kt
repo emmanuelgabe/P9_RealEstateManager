@@ -19,9 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.models.*
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
@@ -62,7 +59,7 @@ fun RealEstateDetailScreen(
                             ImageListItem(
                                 isTablet = isTablet,
                                 imagesUri = realEstate.photoUri,
-                                description = realEstate.photoDescription,
+                                descriptions = realEstate.photoDescription,
                                 onImageClick = {  // TODO add full screen image display
                                 })
                             Spacer(modifier = Modifier.height(12.dp))
@@ -109,7 +106,7 @@ fun RealEstateDetailScreen(
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                         }
-                        if (realEstate.status == RealEstateStatus.AVAILABLE) {
+                        if (realEstate.status == RealEstateStatus.SOLD) {
                             Image(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)

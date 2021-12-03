@@ -27,7 +27,7 @@ data class RealEstateEntity(
     @ColumnInfo(name = "real_estate_agent") val realEstateAgent: String,
     @ColumnInfo(name = "nearby_interest") val nearbyInterest: List<NearbyInterest>? = null
 ) {
-    public fun entityToRealEstate(): RealEstate {
+    fun entityToRealEstate(): RealEstate {
         return RealEstate(
             id = this.id,
             type = this.type!!,
@@ -35,8 +35,8 @@ data class RealEstateEntity(
             size = this.size!!,
             room = this.room!!,
             description = this.description!!,
-            photoUri = this.photoUri,
-            photoDescription = this.photoDescription,
+            photoUri = this.photoUri?: emptyList(),
+            photoDescription = this.photoDescription?: emptyList(),
             address = Address(
                 streetNumber = this.address.streetNumber,
                 streetName = this.address.streetName,

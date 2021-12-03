@@ -24,6 +24,7 @@ class MainActivityViewModel
         get() = _listViewState
 
     private var getRealEstatesJob: Job? = null
+    var realEstateDetailIsDisplay = false
 
     init {
         getRealEstate()

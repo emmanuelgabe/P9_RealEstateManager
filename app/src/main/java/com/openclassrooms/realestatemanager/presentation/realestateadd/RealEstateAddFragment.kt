@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -93,7 +94,7 @@ class RealEstateAddFragment : Fragment() {
 
                 viewModel.onEvent(AddRealEstateEvent.SaveRealEstate(newRealEstate))
                 Snackbar.make(binding.root, "real estate added", Snackbar.LENGTH_LONG).show()
-                viewModelMainActivity.getRealEstate()
+                updateRealEstateListInTabletLand()
                 hideKeyboard(binding.root)
                 val navController = Navigation.findNavController(
                     requireActivity(),
@@ -104,6 +105,16 @@ class RealEstateAddFragment : Fragment() {
         }
         binding.realEstateAddButtonAddPicture.setOnClickListener {
             openGetContentActivity()
+        }
+    }
+
+    private fun updateRealEstateListInTabletLand() {
+        val isTablet = (requireContext().resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+        val isLandscape =
+            (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (isTablet && isLandscape) {
+            viewModelMainActivity.getRealEstate()
         }
     }
 

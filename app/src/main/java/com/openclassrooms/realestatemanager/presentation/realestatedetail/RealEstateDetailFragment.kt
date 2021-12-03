@@ -10,15 +10,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
+import com.openclassrooms.realestatemanager.presentation.MainActivityViewModel
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
 
 class RealEstateDetailFragment : Fragment() {
 
     private var realEstate: RealEstate? = null
     private val viewModelDetail: RealEstateDetailViewModel by viewModels()
+    private val viewModelMainActivity: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +29,7 @@ class RealEstateDetailFragment : Fragment() {
     ): View {
         realEstate = requireArguments().getParcelable("realestate")
         if (realEstate != null) {
+            viewModelMainActivity.realEstateDetailIsDisplay = true
             return ComposeView(requireContext()).apply {
                 setContent {
                     RealEstateDetailScreen(

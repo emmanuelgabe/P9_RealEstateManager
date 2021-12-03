@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.presentation
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -63,7 +64,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        navController.navigateUp()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            navController.navigate(R.id.action_global_realEstateListFragment)
+        } else if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            navController.navigateUp()
+        }
         return super.onSupportNavigateUp()
     }
 
@@ -97,6 +102,23 @@ class MainActivity : AppCompatActivity() {
         }
         if (permissionsToRequest.isNotEmpty()) {
             permissionsLauncher.launch(permissionsToRequest.toTypedArray())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val isTablet = (this.resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            && navController.currentDestination?.id == R.id.realEstateListFragment && isTablet
+        ) {
+            navController.navigate(R.id.action_global_realEstateDetailFragment)
+        } else if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            && navController.currentDestination?.id == R.id.realEstateDetailFragment
+            && !mainViewModel.realEstateDetailIsDisplay
+        ) {
+            navController.navigate(R.id.action_global_realEstateListFragment)
         }
     }
 }

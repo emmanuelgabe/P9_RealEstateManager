@@ -50,5 +50,7 @@
         android:id="@+id/action_global_realEstateDetailFragment"
         app:destination="@id/realEstateDetailFragment" />
 
-
+    <action
+        android:id="@+id/action_global_realEstateListFragment"
+        app:destination="@id/realEstateListFragment" />
 </navigation>

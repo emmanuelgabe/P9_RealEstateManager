@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -24,19 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.presentation.ui.theme.TextWhite
 
 @Composable
 fun ImageListItem(
     modifier: Modifier = Modifier,
     isTablet: Boolean? = false,
-    imagesUri: List<Uri>,
-    descriptions: List<String>,
+    photos: List<Photo>,
     onImageClick: () -> Unit
 ) {
     val itemSize = if (isTablet!!) 240.dp else 160.dp
     LazyRow {
-        itemsIndexed(items = imagesUri) { index, imagesUri -> //   items(imagesUri) { imagesUri ->
+        items(photos) { photo -> //   items(imagesUri) { imagesUri ->
             Card(
                 modifier = modifier
                     .size(itemSize)
@@ -46,8 +46,8 @@ fun ImageListItem(
                 elevation = 2.dp
             ) {
                 Image(
-                    painter = rememberImagePainter(imagesUri),
-                    contentDescription = descriptions[index],
+                    painter = rememberImagePainter(photo.uri),
+                    contentDescription = photo.description,
                     contentScale = ContentScale.Crop
                 )
                 Box(
@@ -67,7 +67,7 @@ fun ImageListItem(
                         .padding(12.dp), contentAlignment = Alignment.BottomStart
                 ) {
                     Text(
-                        text = descriptions[index],
+                        text = photo.description,
                         style = TextStyle(color = TextWhite, fontSize = 16.sp)
                     )
                 }
@@ -79,23 +79,21 @@ fun ImageListItem(
 @Preview
 @Composable
 fun ImageListItemPreview() {
-    val fakeUri = listOf<Uri>(
-        Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
-        Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
-        Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
-        Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
-        Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
+    val fakePhotoList = listOf<Photo>(
+        Photo(
+            Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
+            "photo 1"  ,false),
+        Photo(
+            Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
+            "photo 2"  ,false),
+        Photo(
+            Uri.parse("android.resource://com.openclassrooms.realestatemanager/drawable/ic_launcher_background"),
+            "photo 3"  ,false)
+
     )
-    val fakeDescription = listOf(
-        "photo 1",
-        "photo 2",
-        "photo 3",
-        "photo 4",
-        "photo 5",
-    )
+
     ImageListItem(
         isTablet = false,
-        imagesUri = fakeUri,
-        descriptions = fakeDescription,
+        photos = fakePhotoList,
         onImageClick = { })
 }

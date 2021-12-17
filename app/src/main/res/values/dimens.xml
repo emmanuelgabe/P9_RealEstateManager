@@ -7,4 +7,5 @@
     <dimen name="margin_padding_size_xlarge">32dp</dimen>
     <dimen name="margin_padding_size_xxlarge">40dp</dimen>
     <dimen name="margin_padding_size_xxxlarge">64dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

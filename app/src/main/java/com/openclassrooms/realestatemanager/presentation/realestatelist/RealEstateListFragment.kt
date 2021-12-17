@@ -6,19 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateListFragmentBinding
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
-import com.openclassrooms.realestatemanager.presentation.MainActivityViewModel
+import com.openclassrooms.realestatemanager.utils.KEY_BUNDLE_REAL_ESTATE
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
+
+@AndroidEntryPoint
 class RealEstateListFragment : Fragment(), RealEstateListAdapter.Interaction {
 
     private lateinit var binding: RealEstateListFragmentBinding
-    private lateinit var mAdapter: RealEstateListAdapter
-    private val viewModelMainActivity: MainActivityViewModel by activityViewModels()
+    private lateinit var realEstateAdapter: RealEstateListAdapter
+    private val listViewModel: RealEstateListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,31 +31,29 @@ class RealEstateListFragment : Fragment(), RealEstateListAdapter.Interaction {
     ): View? {
         val view = inflater.inflate(R.layout.real_estate_list_fragment, container, false)
         binding = RealEstateListFragmentBinding.bind(view)
-        mAdapter = RealEstateListAdapter(this)
+        realEstateAdapter = RealEstateListAdapter(this)
         binding.listFragmentRecyclerView.layoutManager = LinearLayoutManager(activity)
-        subscribeObservers()
-        binding.listFragmentRecyclerView.adapter = mAdapter
-        mAdapter.submitList(viewModelMainActivity.listViewState.value?.realEstates!!)
+        binding.listFragmentRecyclerView.adapter = realEstateAdapter
+        lifecycleScope.launchWhenStarted {
+            listViewModel.eventFlow.collectLatest { event ->
+                when (event) {
+                    is RealEstateListViewModel.UiEvent.SubmitList -> {
+                        realEstateAdapter.submitList(event.realEstateList)
+                        realEstateAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
         return view
     }
 
     override fun onItemSelected(position: Int, item: RealEstate) {
-        val bundle = bundleOf("realestate" to item)
+        val bundle = bundleOf(KEY_BUNDLE_REAL_ESTATE to item)
         findNavController().navigate(R.id.action_global_realEstateDetailFragment, bundle)
-    }
-
-    private fun subscribeObservers() {
-        viewModelMainActivity.listViewState.observe(
-            viewLifecycleOwner,
-            { listViewState ->
-                listViewState.realEstates.let { realEstates ->
-                    mAdapter.submitList(realEstates)
-                }
-            })
     }
 
     override fun onResume() {
         super.onResume()
-        viewModelMainActivity.getRealEstate()
+        listViewModel.realEstates.value?.let { realEstateAdapter.submitList(it) }
     }
 }

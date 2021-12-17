@@ -16,16 +16,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.domain.models.*
-import com.openclassrooms.realestatemanager.domain.utils.DateUtil
+import com.openclassrooms.realestatemanager.domain.models.Address
+import com.openclassrooms.realestatemanager.domain.models.RealEstate
+import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
 import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ExpandableCard
 import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ImageListItem
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
-import java.text.SimpleDateFormat
 
 
 @Composable
@@ -54,16 +53,17 @@ fun RealEstateDetailScreen(
                                     bottom = dimensionResource(R.dimen.margin_padding_size_medium)
                                 )
                         ) {
-                            Text(text = "Media", style = MaterialTheme.typography.h2)
-                            Spacer(modifier = Modifier.height(12.dp))
-                            ImageListItem(
-                                isTablet = isTablet,
-                                imagesUri = realEstate.photoUri,
-                                descriptions = realEstate.photoDescription,
-                                onImageClick = {  // TODO add full screen image display
-                                })
-                            Spacer(modifier = Modifier.height(12.dp))
-                            if (isTablet) SpacerTablet()
+                            if (realEstate.photos.isNotEmpty()) {
+                                Text(text = "Media", style = MaterialTheme.typography.h2)
+                                Spacer(modifier = Modifier.height(12.dp))
+                                ImageListItem(
+                                    isTablet = isTablet,
+                                    photos = realEstate.photos,
+                                    onImageClick = {  // TODO add full screen image display
+                                    })
+                                Spacer(modifier = Modifier.height(12.dp))
+                                if (isTablet) SpacerTablet()
+                            }
                             Text(text = "Information", style = MaterialTheme.typography.h2)
                             Spacer(modifier = Modifier.height(12.dp))
                             RealEstateInformation(
@@ -72,18 +72,18 @@ fun RealEstateDetailScreen(
                                 maxWidth = boxWithConstraintsScope.maxWidth,
                                 type = realEstate.type.toString(),
                                 price = realEstate.price.toString(),
-                                description = realEstate.description,
+                                description = realEstate.description!!,
                                 size = realEstate.size.toString(),
                                 rooms = realEstate.room.toString(),
                                 entryDate = realEstate.entryDate,
                                 saleDate = realEstate.saleDate,
-                                realEstateAgent = realEstate.realEstateAgent
+                                realEstateAgent = realEstate.realEstateAgent!!
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             if (isTablet) SpacerTablet()
                             Text(text = "Location", style = MaterialTheme.typography.h2)
                             Spacer(modifier = Modifier.height(12.dp))
-                            RealEstateLocation(isTablet, realEstate.address)
+                            RealEstateLocation(isTablet, realEstate.address!!)
                             Spacer(modifier = Modifier.height(12.dp))
                             if (isTablet) SpacerTablet()
                             Button(
@@ -185,6 +185,15 @@ fun RealEstateInformation(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = "Entry on ${entryDate.dropLast(8)}", Modifier.padding(end = 16.dp))
+        if (!saleDate.isNullOrBlank()) {
+            Text(text = "Sold on $saleDate")
+        } else {
+            Text(text = "Status: Available")
+        }
+
+        Text(text = "Agent: $realEstateAgent")
         ExpandableCard(
             cardIsExpandedState = cardIsExpandedState,
             expandedCardTouchEvent = expandedCardTouchEvent,
@@ -192,12 +201,6 @@ fun RealEstateInformation(
             description = description,
             titleFontWeight = FontWeight.Normal
         )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "Real Estate entry on ${entryDate.dropLast(8)}")
-        if (saleDate != null) {
-            Text(text = "Real Estate sold on ${entryDate.dropLast(8)}")
-        }
-        Text(text = "real estate agent ${realEstateAgent}")
     }
 }
 
@@ -242,26 +245,4 @@ fun SpacerTablet() {
                 )
             )
     )
-}
-
-class RealEstateProvider : PreviewParameterProvider<RealEstate> {
-    private val fakeRealEstate =
-        RealEstateFactory(DateUtil(SimpleDateFormat("yyyy.MM.dd HH:mm:ss"))).createRealEstate(
-            id = null,
-            type = RealEstateType.APARTMENT,
-            price = 300000,
-            size = 40,
-            room = 1,
-            description = "Apartment on the first floor of an elegant period building in Earl's Court.The property consists of a bright room with a kitchenette and bathroom. The location is excellent, with the numerous restaurants and shops of Earl's Court Road and the underground stations of Earl's Court, West Brompton and West Kensington within walking distance from the property.",
-            streetNumber = 3,
-            streetName = "Nevern Square",
-            postalCode = 533420,
-            city = "London",
-            country = "England",
-            status = RealEstateStatus.AVAILABLE,
-            lat = 0.0,
-            lng = 1.1,
-            realEstateAgent = "Sthéphane Dupont"
-        )
-    override val values: Sequence<RealEstate> = sequenceOf(fakeRealEstate)
 }

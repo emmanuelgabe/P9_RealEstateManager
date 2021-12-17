@@ -2,35 +2,37 @@ package com.openclassrooms.realestatemanager.domain.models
 
 import android.net.Uri
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
+import com.openclassrooms.realestatemanager.utils.DATE_FORMAT_ENTRY_DATE
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Create by Emmanuel gabé on 17/09/2021.
  */
 class RealEstateFactory
-constructor(private val dateUtil: DateUtil) {
+constructor(private val dateUtil: DateUtil = DateUtil(SimpleDateFormat(DATE_FORMAT_ENTRY_DATE))) {
     fun createRealEstate(
         id: String? = null,
-        type: RealEstateType,
-        price: Int,
-        size: Int,
-        room: Int,
-        description: String,
-        photoUri: List<Uri> = emptyList(),
-        photoDescription: List<String> = emptyList(),
+        type: RealEstateType? = null,
+        price: Int? = null,
+        size: Int? = null,
+        room: Int? = null,
+        description: String? = null,
         streetNumber: Int? = null,
         streetName: String? = null,
         postalCode: Int? = null,
-        city: String,
+        city: String? = null,
         country: String? = null,
         status: RealEstateStatus,
         mapPhoto: Uri? = null,
-        lat: Double,
-        lng: Double,
+        lat: Double? = null,
+        lng: Double? = null,
         entryDate: String? = null,
         saleDate: String? = null,
-        realEstateAgent: String,
-        nearbyInterest: List<NearbyInterest>? = null
+        realEstateAgent: String? = null,
+        nearbyInterest: MutableList<NearbyInterest>? = null,
+        photosUri: List<Uri>? = null,
+        photosDescription: List<String>? = null
     ): RealEstate {
         return RealEstate(
             id = id ?: UUID.randomUUID().toString(),
@@ -39,8 +41,6 @@ constructor(private val dateUtil: DateUtil) {
             size = size,
             room = room,
             description = description,
-            photoUri = photoUri,
-            photoDescription = photoDescription,
             address = Address(
                 streetNumber = streetNumber,
                 streetName = streetName,
@@ -53,9 +53,21 @@ constructor(private val dateUtil: DateUtil) {
             lat = lat,
             lng = lng,
             entryDate = entryDate ?: dateUtil.getCurrentTimestamp(),
-            saleDate = saleDate,
+            saleDate = saleDate ?: "",
             realEstateAgent = realEstateAgent,
-            nearbyInterest = nearbyInterest
+            nearbyInterest = nearbyInterest ?: mutableListOf<NearbyInterest>(),
+            photos = createPhotoList(photosUri ?: emptyList(), photosDescription ?: emptyList())
         )
+    }
+
+    private fun createPhotoList(
+        photosUri: List<Uri>, photosDescription: List<String>
+    ): MutableList<Photo> {
+        val list = mutableListOf<Photo>()
+        for ((index, photoUri) in photosUri.withIndex()) {
+            val photo = Photo(photoUri, photosDescription.get(index), false)
+            list.add(photo)
+        }
+        return list
     }
 }

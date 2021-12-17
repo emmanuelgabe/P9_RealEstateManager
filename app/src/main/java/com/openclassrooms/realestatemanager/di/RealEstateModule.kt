@@ -9,6 +9,7 @@ import com.openclassrooms.realestatemanager.domain.repository.RealEstateReposito
 import com.openclassrooms.realestatemanager.domain.usecase.GetRealEstates
 import com.openclassrooms.realestatemanager.domain.usecase.InsertRealEstate
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
+import com.openclassrooms.realestatemanager.domain.usecase.UpdateRealEstate
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +42,8 @@ object RealEstateModule {
     fun provideRealEstateUseCases(repository: RealEstateRepository): RealEstateUseCases {
         return RealEstateUseCases(
             getRealEstates = GetRealEstates(repository),
-            insertRealEstate = InsertRealEstate(repository)
+            insertRealEstate = InsertRealEstate(repository),
+            updateRealEstate = UpdateRealEstate(repository)
         )
     }
 

@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -19,12 +18,10 @@ import androidx.navigation.ui.NavigationUI
 import com.openclassrooms.realestatemanager.R
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var addMenuItem: MenuItem
-    private val mainViewModel: MainActivityViewModel by viewModels()
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
@@ -59,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                     .navigate(R.id.action_global_realEstateAddFragment)
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -107,16 +103,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        reorganizeFragmentsAfterRotation()
+    }
+
+    private fun reorganizeFragmentsAfterRotation() {
         val isTablet = (this.resources.configuration.screenLayout
                 and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
-
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
             && navController.currentDestination?.id == R.id.realEstateListFragment && isTablet
         ) {
             navController.navigate(R.id.action_global_realEstateDetailFragment)
         } else if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             && navController.currentDestination?.id == R.id.realEstateDetailFragment
-            && !mainViewModel.realEstateDetailIsDisplay
         ) {
             navController.navigate(R.id.action_global_realEstateListFragment)
         }

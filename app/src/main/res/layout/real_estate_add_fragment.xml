@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.openclassrooms.realestatemanager.utils.BindingConverter" />
+
+        <variable
+            name="addViewModel"
+            type="com.openclassrooms.realestatemanager.presentation.realestateadd.RealEstateAddViewModel" />
+    </data>
+
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".presentation.realestateadd.RealEstateAddFragment">
@@ -19,7 +30,7 @@
             style="@style/Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_information"
+            android:text="@string/all_title_information"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +54,8 @@
                 android:clickable="false"
                 android:focusable="true"
                 android:focusableInTouchMode="false"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="@={BindingConverter.realEstateTypeToString(addViewModel.realEstate.type)}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_price"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:text="@={BindingConverter.intToString(addViewModel.realEstate.price)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +98,7 @@
                 android:clickable="false"
                 android:focusable="true"
                 android:focusableInTouchMode="false"
-                android:inputType="none" />
+                android:inputType="none"  android:text="@={BindingConverter.intToString(addViewModel.realEstate.room)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_size"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:text="@={BindingConverter.intToString(addViewModel.realEstate.size)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +138,8 @@
                 android:inputType="textMultiLine"
                 android:lines="3"
                 android:maxLength="300"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:text="@={addViewModel.realEstate.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -145,7 +160,8 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:inputType="none|textNoSuggestions" />
+                android:inputType="none|textNoSuggestions"
+                android:text="@={BindingConverter.nearbyInterestToString(addViewModel.realEstate.nearbyInterest)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -162,7 +178,8 @@
                 android:id="@+id/real_estate_add_tiet_real_estate_agent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_real_estate_agent" />
+                android:hint="@string/all_real_estate_agent"
+                android:text="@={addViewModel.realEstate.realEstateAgent}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -175,15 +192,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_real_estate_agent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/real_estate_add_rv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/real_estate_add_button_add_picture"
+            tools:listitem="@layout/photo_item"
+            tools:itemCount="1"/>
+
         <TextView
             android:id="@+id/real_estate_add_tv_address"
             style="@style/Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="@string/title_address"
+            android:text="@string/all_title_address"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_button_add_picture" />
+            app:layout_constraintTop_toBottomOf="@id/real_estate_add_rv_photo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/real_estate_add_til_street_number"
@@ -201,7 +227,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_street_number"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.streetNumber)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -219,7 +246,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_street_name"
-                android:inputType="text" />
+                android:inputType="text"
+                android:text="@={addViewModel.realEstate.address.streetName}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -238,7 +266,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_postal_code"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.postalCode)}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -256,7 +285,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_city"
-                android:inputType="text" />
+                android:inputType="text"
+                android:text="@={addViewModel.realEstate.address.city}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -273,7 +303,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/all_country"
-                android:inputType="text" />
+                android:inputType="text"
+                android:text="@={addViewModel.realEstate.address.country}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -289,3 +320,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</layout>

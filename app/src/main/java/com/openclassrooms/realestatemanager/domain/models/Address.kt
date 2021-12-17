@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Address(
-    val streetNumber: Int? = null,
-    val streetName: String? = null,
-    val postalCode: Int? = null,
-    val city: String,
-    val country: String? = null
+    var streetNumber: Int?,
+    var streetName: String?,
+    var postalCode: Int?,
+    var city: String?,
+    var country: String?
 ) : Parcelable

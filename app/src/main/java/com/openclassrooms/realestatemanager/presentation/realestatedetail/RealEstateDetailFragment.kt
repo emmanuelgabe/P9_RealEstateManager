@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.presentation.MainActivityViewModel
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
+import com.openclassrooms.realestatemanager.utils.KEY_BUNDLE_REAL_ESTATE
 
 class RealEstateDetailFragment : Fragment() {
 
@@ -27,9 +28,8 @@ class RealEstateDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        realEstate = requireArguments().getParcelable("realestate")
+        realEstate = requireArguments().getParcelable(KEY_BUNDLE_REAL_ESTATE)
         if (realEstate != null) {
-            viewModelMainActivity.realEstateDetailIsDisplay = true
             return ComposeView(requireContext()).apply {
                 setContent {
                     RealEstateDetailScreen(
@@ -37,7 +37,7 @@ class RealEstateDetailFragment : Fragment() {
                         onNavigate = { dest ->
                             findNavController().navigate(
                                 dest,
-                                bundleOf("realestate" to realEstate)
+                                bundleOf(KEY_BUNDLE_REAL_ESTATE to realEstate)
                             )
                         },
                         viewModelDetail,

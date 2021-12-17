@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateItemBinding
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
+import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
 
 class RealEstateListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -69,15 +71,32 @@ class RealEstateListAdapter(private val interaction: Interaction? = null) :
             itemView.setOnClickListener {
                 interaction?.onItemSelected(layoutPosition, realEstate)
             }
-            if (realEstate.photoUri.isNotEmpty()) {
-                binding.realEstateItemImageView.setImageURI(realEstate.photoUri[0])
-                binding.realEstateItemImageView.setClipToOutline(true)
+            binding.realEstateItemImageView.clipToOutline = true
+            if (realEstate.photos.isNotEmpty()) {
+                binding.realEstateItemImageView.load(realEstate.photos[0].uri)
+            } else {
+                binding.realEstateItemImageView.load(R.drawable.ic_no_photography_24)
             }
-            binding.realEstateItemTextViewDescription.text =
-                "${realEstate.type} - ${realEstate.size} - room: ${realEstate.room}"
-            binding.realEstateItemTextViewPrice.text = "${realEstate.price}$"
-            binding.realEstateItemTextViewPlace.text =
-                "${realEstate.address.postalCode} ${realEstate.address.city} ${realEstate.address.city}"
+            binding.realEstateItemTextViewDescription.text = context.getString(
+                R.string.real_estate_list_adapter_description,
+                realEstate.type,
+                realEstate.size,
+                realEstate.room
+            )
+            binding.realEstateItemTextViewPrice.text =
+                context.getString(R.string.real_estate_list_adapter_price, realEstate.price)
+            binding.realEstateItemTextViewPlace.text = context.getString(
+                R.string.real_estate_list_place,
+                realEstate.address!!.postalCode,
+                realEstate.address.city,
+                realEstate.address.country
+            )
+            if (realEstate.status == RealEstateStatus.SOLD) {
+                binding.realEstateItemIvSoldBanner.visibility = View.VISIBLE
+                binding.realEstateItemIvSoldBanner.setImageResource(R.drawable.sold_banner)
+            } else {
+                binding.realEstateItemIvSoldBanner.visibility = View.INVISIBLE
+            }
         }
     }
 

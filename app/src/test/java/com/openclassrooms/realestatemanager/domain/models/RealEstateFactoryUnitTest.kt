@@ -16,7 +16,7 @@ class RealEstateFactoryUnitTest {
     fun `create RealEstate with factory, RealEstate successfully created`() {
 
         val realEstate =
-            RealEstateFactory(DateUtil(SimpleDateFormat("yyyy.MM.dd HH:mm:ss"))).createRealEstate(
+            RealEstateFactory().createRealEstate(
                 id = null,
                 type = RealEstateType.APARTMENT,
                 price = 300000,

@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.domain.models
 
-enum class NearbyInterest(val nearbyInterest: String) {
+enum class
+NearbyInterest(val nearbyInterest: String) {
     SCHOOL("School"),
     MONUMENT("Monument"),
     PARK("Park"),

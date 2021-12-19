@@ -18,7 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.data.remote.RequestBuilder
 import com.openclassrooms.realestatemanager.domain.models.Address
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
@@ -59,7 +61,7 @@ fun RealEstateDetailScreen(
                                 ImageListItem(
                                     isTablet = isTablet,
                                     photos = realEstate.photos,
-                                    onImageClick = {  // TODO add full screen image display
+                                    onImageClick = {
                                     })
                                 Spacer(modifier = Modifier.height(12.dp))
                                 if (isTablet) SpacerTablet()
@@ -215,16 +217,22 @@ fun RealEstateLocation(isTablet: Boolean, address: Address) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Map")
         val mapSize = if (isTablet) 400.dp else 200.dp
-        Image(
+        Card(
             modifier = Modifier
-                .border(3.dp, Color.Black)
                 .size(mapSize),
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "map location",
-            contentScale = ContentScale.Crop
-        )
+            shape = MaterialTheme.shapes.large,
+            border = BorderStroke(1.dp, Color.Gray),
+            elevation = 2.dp
+        ) {
+            Image(
+                modifier = Modifier
+                    .size(mapSize),
+                painter = rememberImagePainter(RequestBuilder.mapsStaticAPIUrl(address)),
+                contentDescription = "map location",
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 

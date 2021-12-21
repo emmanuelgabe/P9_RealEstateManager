@@ -11,7 +11,8 @@ const val REAL_ESTATE_TABLE_NAME = "real_estate_table"
 
 // Maps BASE URL
 const val BASE_URL = "https://maps.googleapis.com/"
-const val REQUEST_PATH = "maps/api/staticmap?"
+const val STATICMAP_PATH = "maps/api/staticmap?"
+const val GEOCODING_PATH = "maps/api/geocode/json?"
 const val MAPS_ZOOM = "17"
 const val MAPS_SIZE = "600x600"
 const val MAPS_MARKER_ANCHOR = "bottomcenter"

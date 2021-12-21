@@ -85,7 +85,10 @@ fun RealEstateDetailScreen(
                             if (isTablet) SpacerTablet()
                             Text(text = "Location", style = MaterialTheme.typography.h2)
                             Spacer(modifier = Modifier.height(12.dp))
-                            RealEstateLocation(isTablet, realEstate.address!!)
+                            RealEstateLocation(
+                                isTablet,
+                                realEstate.address!!, realEstate.lat, realEstate.lng
+                            )
                             Spacer(modifier = Modifier.height(12.dp))
                             if (isTablet) SpacerTablet()
                             Button(
@@ -207,7 +210,7 @@ fun RealEstateInformation(
 }
 
 @Composable
-fun RealEstateLocation(isTablet: Boolean, address: Address) {
+fun RealEstateLocation(isTablet: Boolean, address: Address, lat: Double?, lng: Double?) {
 
     Text(text = "${address.streetNumber} ${address.streetName}")
     Text(text = "${address.postalCode} ${address.city}")
@@ -217,21 +220,23 @@ fun RealEstateLocation(isTablet: Boolean, address: Address) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val mapSize = if (isTablet) 400.dp else 200.dp
-        Card(
-            modifier = Modifier
-                .size(mapSize),
-            shape = MaterialTheme.shapes.large,
-            border = BorderStroke(1.dp, Color.Gray),
-            elevation = 2.dp
-        ) {
-            Image(
+        if (lat != null && lng != null) {
+            val mapSize = if (isTablet) 400.dp else 200.dp
+            Card(
                 modifier = Modifier
                     .size(mapSize),
-                painter = rememberImagePainter(RequestBuilder.mapsStaticAPIUrl(address)),
-                contentDescription = "map location",
-                contentScale = ContentScale.Crop
-            )
+                shape = MaterialTheme.shapes.large,
+                border = BorderStroke(1.dp, Color.Gray),
+                elevation = 2.dp
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(mapSize),
+                    painter = rememberImagePainter(RequestBuilder.mapsStaticAPIUrl(lat, lng)),
+                    contentDescription = "map location",
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     }
 }

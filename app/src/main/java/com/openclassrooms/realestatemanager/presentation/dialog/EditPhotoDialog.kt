@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.presentation.alertdialog
+package com.openclassrooms.realestatemanager.presentation.dialog
 
 import android.app.AlertDialog
 import android.content.Context

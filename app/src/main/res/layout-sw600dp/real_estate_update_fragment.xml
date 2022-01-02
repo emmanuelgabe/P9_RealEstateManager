@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
-                android:text="Real estate status: Available"
+                android:text="@string/real_estate_update_tv_information_available"
                 app:layout_constraintEnd_toStartOf="@id/real_estate_update_tv_sale_date"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
-                android:text="@={updateViewModel.realEstate.saleDate}"
+                app:textSaleDate="@{updateViewModel.realEstate.saleDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/real_estate_update_tv_sale_date_information"
                 app:layout_constraintTop_toBottomOf="@id/real_estate_update_button_add_sale_date" />

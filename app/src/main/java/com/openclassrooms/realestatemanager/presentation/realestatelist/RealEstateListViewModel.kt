@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
+import com.openclassrooms.realestatemanager.domain.models.RealEstateFilter
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
-import com.openclassrooms.realestatemanager.presentation.realestateupdate.RealEstateUpdateViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,6 +34,11 @@ class RealEstateListViewModel @Inject constructor(
     }
 
     private fun getRealEstate() {
+        getRealEstatesJob?.let {
+            if (it.isActive) {
+                it.cancel()
+            }
+        }
         getRealEstatesJob = viewModelScope.launch {
             realEstateUseCases.getRealEstates().collectLatest { realEstates ->
                 _realEstates.value = realEstates
@@ -41,6 +46,23 @@ class RealEstateListViewModel @Inject constructor(
             }
         }
     }
+
+    fun updateList(realEstateFilter: RealEstateFilter) {
+        getRealEstatesJob?.let {
+            if (it.isActive) {
+                it.cancel()
+            }
+        }
+        getRealEstatesJob = viewModelScope.launch {
+            realEstateUseCases.getFilteredRealEState(
+                realEstateFilter
+            ).collectLatest { realEstates ->
+                _realEstates.value = realEstates
+                _eventFlow.emit(UiEvent.SubmitList(realEstates))
+            }
+        }
+    }
+
     sealed class UiEvent {
         data class SubmitList(val realEstateList: List<RealEstate>) : UiEvent()
     }

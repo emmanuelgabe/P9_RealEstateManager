@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_add_24"
         android:title="@string/all_add_real_estate"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/filter_menu_item"
+        android:icon="@drawable/ic_filter_list_white"
+        android:title="@string/all_add_real_estate"
+        app:showAsAction="always" />
 </menu>

@@ -16,12 +16,14 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.presentation.dialog.FilterBottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var addMenuItem: MenuItem
+    private lateinit var filterMenuItem: MenuItem
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
@@ -43,8 +45,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         addMenuItem = menu.findItem(R.id.add_menu_item)
+        filterMenuItem = menu.findItem(R.id.filter_menu_item)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             addMenuItem.isVisible = destination.label != "Add real estate"
+            if (!resources.getBoolean(R.bool.is_tablet)) filterMenuItem.isVisible =
+                destination.label == "List real estate"
         }
         return true
     }
@@ -54,6 +59,12 @@ class MainActivity : AppCompatActivity() {
             R.id.add_menu_item -> {
                 Navigation.findNavController(this, R.id.activity_main_fcv_nav_host_fragment)
                     .navigate(R.id.action_global_realEstateAddFragment)
+            }
+            R.id.filter_menu_item -> {
+                supportFragmentManager.let {
+                    val modalBottomSheet = FilterBottomSheetDialog()
+                    modalBottomSheet.show(supportFragmentManager, FilterBottomSheetDialog.TAG)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -107,10 +118,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reorganizeFragmentsAfterRotation() {
-        val isTablet = (this.resources.configuration.screenLayout
-                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-            && navController.currentDestination?.id == R.id.realEstateListFragment && isTablet
+            && navController.currentDestination?.id == R.id.realEstateListFragment && resources.getBoolean(
+                R.bool.is_tablet
+            )
         ) {
             navController.navigate(R.id.action_global_realEstateDetailFragment)
         } else if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT

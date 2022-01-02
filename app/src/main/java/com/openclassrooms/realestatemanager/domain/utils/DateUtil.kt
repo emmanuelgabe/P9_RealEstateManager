@@ -1,14 +1,15 @@
 package com.openclassrooms.realestatemanager.domain.utils
 
+import com.openclassrooms.realestatemanager.utils.DATE_FORMAT
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Create by Emmanuel gabé on 17/09/2021.
  */
-class DateUtil constructor(private val dateFormat: SimpleDateFormat) {
+object DateUtil  {
 
-    fun getCurrentTimestamp(): String {
-        return dateFormat.format(Date())
+    fun formatDate(date: Date): String {
+        return SimpleDateFormat(DATE_FORMAT, Locale.US).format(date)
     }
 }

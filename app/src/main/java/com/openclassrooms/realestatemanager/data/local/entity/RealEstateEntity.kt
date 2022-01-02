@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.openclassrooms.realestatemanager.domain.models.*
 import com.openclassrooms.realestatemanager.utils.REAL_ESTATE_TABLE_NAME
+import java.util.*
 
 @Entity(tableName = REAL_ESTATE_TABLE_NAME)
 data class RealEstateEntity(
@@ -23,8 +24,8 @@ data class RealEstateEntity(
     @ColumnInfo(name = "map_photo") val mapPhoto: Uri? = null,
     val lat: Double? = null,
     val lng: Double? = null,
-    @ColumnInfo(name = "entry_date") val entryDate: String,
-    @ColumnInfo(name = "sale_date") val saleDate: String? = null,
+    @ColumnInfo(name = "entry_date") val entryDate: Date,
+    @ColumnInfo(name = "sale_date") val saleDate: Date? = null,
     @ColumnInfo(name = "real_estate_agent") val realEstateAgent: String,
     @ColumnInfo(name = "nearby_interest") val nearbyInterest: List<NearbyInterest>? = null
 ) {
@@ -48,7 +49,7 @@ data class RealEstateEntity(
             lat = this.lat,
             lng = this.lng,
             entryDate = this.entryDate,
-            saleDate = this.saleDate ?: "",
+            saleDate = this.saleDate,
             realEstateAgent = this.realEstateAgent,
             nearbyInterest = (this.nearbyInterest ?: emptyList()).toMutableList(),
         )
@@ -75,7 +76,7 @@ data class RealEstateEntity(
                 lat = realEstate.lat,
                 lng = realEstate.lng,
                 entryDate = realEstate.entryDate,
-                saleDate = if (realEstate.saleDate.isNullOrBlank()) null else realEstate.saleDate,
+                saleDate = realEstate.saleDate,
                 realEstateAgent = realEstate.realEstateAgent!!,
                 nearbyInterest = if (realEstate.nearbyInterest.isEmpty()) null else realEstate.nearbyInterest,
                 photoUri = getUrisFromPhotoList(realEstate.photos),

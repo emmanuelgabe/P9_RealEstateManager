@@ -33,4 +33,26 @@
     <string name="all_cancel">Cancel</string>
     <string name="all_remove">Remove</string>
     <string name="all_photo_description">Photo description</string>
+    <string name="filter_city_name">City name</string>
+    <string name="filter_price">Price :</string>
+    <string name="filter_size">Size :</string>
+    <string name="filter_photo">Photo :</string>
+    <string name="filter_near_by_interest">Near by interest</string>
+    <string name="filter_reset">Reset</string>
+    <string name="filter_apply">Apply</string>
+    <string name="filter_sw600dp_price">Price</string>
+    <string name="filter_sw600dp_size">Size</string>
+    <string name="filter_sw600dp_photo">Photo</string>
+    <string name="filter_most_max_price">+ %1s</string>
+    <string name="filter_most_max_size">+ %1dm</string>
+    <string name="filter_max_size">%1dm</string>
+    <string name="filter_most_max_photo">+ %1d</string>
+    <string name="filter_add_min_entry_date">Add min entry date</string>
+    <string name="filter_edit_min_entry_date">Edit min entry date</string>
+    <string name="filter_add_max_entry_date">Add max entry date</string>
+    <string name="filter_edit_max_entry_date">Edit max entry date</string>
+    <string name="filter_add_min_sale_date">Add min sale date</string>
+    <string name="filter_edit_min_sale_date">Edit min sale date</string>
+    <string name="filter_add_max_sale_date">Add max sale date</string>
+    <string name="filter_edit_max_sale_date">Edit max sale date</string>
 </resources>

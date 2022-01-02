@@ -19,22 +19,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.presentation.ui.theme.TextWhite
 
 @Composable
 fun ImageListItem(
     modifier: Modifier = Modifier,
-    isTablet: Boolean? = false,
     photos: List<Photo>,
     onImageClick: () -> Unit
 ) {
-    val itemSize = if (isTablet!!) 240.dp else 160.dp
+    val itemSize = if (booleanResource(R.bool.is_tablet)) 240.dp else 160.dp
     LazyRow {
         items(photos) { photo -> //   items(imagesUri) { imagesUri ->
             Card(
@@ -93,7 +94,6 @@ fun ImageListItemPreview() {
     )
 
     ImageListItem(
-        isTablet = false,
         photos = fakePhotoList,
         onImageClick = { })
 }

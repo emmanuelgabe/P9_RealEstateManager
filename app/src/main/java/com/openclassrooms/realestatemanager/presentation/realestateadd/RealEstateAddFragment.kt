@@ -23,10 +23,10 @@ import com.openclassrooms.realestatemanager.databinding.RealEstateAddFragmentBin
 import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
-import com.openclassrooms.realestatemanager.presentation.alertdialog.AddPhotoDialog
-import com.openclassrooms.realestatemanager.presentation.alertdialog.AddPhotoDialogListener
-import com.openclassrooms.realestatemanager.presentation.alertdialog.EditPhotoDialog
-import com.openclassrooms.realestatemanager.presentation.alertdialog.EditPhotoDialogListener
+import com.openclassrooms.realestatemanager.presentation.dialog.AddPhotoDialog
+import com.openclassrooms.realestatemanager.presentation.dialog.AddPhotoDialogListener
+import com.openclassrooms.realestatemanager.presentation.dialog.EditPhotoDialog
+import com.openclassrooms.realestatemanager.presentation.dialog.EditPhotoDialogListener
 import com.openclassrooms.realestatemanager.utils.Util
 import com.openclassrooms.realestatemanager.utils.Util.hideKeyboard
 import com.openclassrooms.realestatemanager.utils.savePhoto

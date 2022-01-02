@@ -23,7 +23,7 @@ import com.openclassrooms.realestatemanager.databinding.RealEstateUpdateFragment
 import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
-import com.openclassrooms.realestatemanager.presentation.alertdialog.*
+import com.openclassrooms.realestatemanager.presentation.dialog.*
 import com.openclassrooms.realestatemanager.utils.KEY_BUNDLE_REAL_ESTATE
 import com.openclassrooms.realestatemanager.utils.Util.hideKeyboard
 import com.openclassrooms.realestatemanager.utils.Util.removalOfDuplicates
@@ -67,7 +67,7 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
             }
         }
         updateViewModel.realEstate.observe(this) { realEstate ->
-            if (realEstate.saleDate.isNullOrBlank()) {
+            if (realEstate.saleDate == null) {
                 binding.realEstateUpdateTvSaleDateInformation.text =
                     resources.getString(R.string.real_estate_update_tv_information_available)
                 binding.realEstateUpdateButtonAddSaleDate.text =
@@ -94,11 +94,16 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
                             UUID.randomUUID().toString(), photo.uri, requireContext()
                         )
                         if (uriInternal != null)
-                            updateViewModel.updatePhoto(photo.copy(uri = uriInternal,uriIsExternal = false), index)
+                            updateViewModel.updatePhoto(
+                                photo.copy(
+                                    uri = uriInternal,
+                                    uriIsExternal = false
+                                ), index
+                            )
                     }
                 }
-                for (uri in updateViewModel.photosToDelete.value!!){
-                    deletePhoto(requireContext(),uri)
+                for (uri in updateViewModel.photosToDelete.value!!) {
+                    deletePhoto(requireContext(), uri)
                 }
             }
             updateViewModel.onEvent(UpdateRealEstateEvent.UpdateRealEstate)
@@ -113,11 +118,12 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
                     is RealEstateUpdateViewModel.UIEvent.RealEstateUpdated -> {
                         hideKeyboard()
                         val navController = Navigation.findNavController(
-                            requireActivity(), R.id.activity_main_fcv_nav_host_fragment)
+                            requireActivity(), R.id.activity_main_fcv_nav_host_fragment
+                        )
                         navController.navigateUp()
                     }
-                    is RealEstateUpdateViewModel.UIEvent.ShowSnackbar -> {
-                        Snackbar.make( binding.root, event.message,Snackbar.LENGTH_LONG).show()
+                    is RealEstateUpdateViewModel.UIEvent.ShowSnackBar -> {
+                        Snackbar.make(binding.root, event.message, Snackbar.LENGTH_LONG).show()
                     }
                 }
             }
@@ -130,14 +136,18 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launchGetContentActivity.launch(chooser)
     }
-    private var launchGetContentActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            if (it.data != null) {
-                AddPhotoDialog(requireContext(),this
-                ).openAddDescriptionDialog(it.data!!.data as Uri)
+
+    private var launchGetContentActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                if (it.data != null) {
+                    AddPhotoDialog(
+                        requireContext(), this
+                    ).openAddDescriptionDialog(it.data!!.data as Uri)
+                }
             }
         }
-    }
+
     override fun onResume() {
         super.onResume()
         val typeAdapterAdapter =
@@ -228,21 +238,26 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
         }
         return fieldsIsNotEmpty
     }
-    override fun onUpdateSaleDate(saleDate: String) {
-        updateViewModel.updateSaleDate(saleDate)
+
+    override fun onUpdateSaleDate(date: Date?, tag: String?) {
+        updateViewModel.updateSaleDate(date)
     }
+
     override fun onUpdatePhoto(photo: Photo, position: Int) {
-        updateViewModel.updatePhoto(photo,position)
+        updateViewModel.updatePhoto(photo, position)
         photoAdapter.notifyItemChanged(position)
     }
+
     override fun onRemovePhoto(photo: Photo, position: Int) {
         updateViewModel.removePhoto(photo)
         photoAdapter.notifyItemRemoved(position)
     }
+
     override fun onAddPhoto(photo: Photo) {
         updateViewModel.addPhoto(photo)
         photoAdapter.notifyItemInserted(updateViewModel.realEstate.value!!.photos.lastIndex)
     }
+
     override fun onPhotoItemSelected(photo: Photo, position: Int) {
         EditPhotoDialog(requireContext(), this).openEditPhotoDialog(photo, position)
     }

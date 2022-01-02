@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.openclassrooms.realestatemanager.utils.ConstantsKt" />
+
+        <variable
+            name="mainViewModel"
+            type="com.openclassrooms.realestatemanager.presentation.MainActivityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_bottom_sheet"
+        style="?attr/bottomSheetStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_padding_size_small">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/filter_sheet_dialog_button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/filter_sheet_dialog_et_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_large"
+            android:hint="@string/filter_city_name"
+            android:inputType="text"
+            android:text="@={mainViewModel.realEstateFilter.city}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_title_price"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:text="@string/filter_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_et_city" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_min_price"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_price"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_rs_price"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_rs_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filter_sheet_dialog_rs_price"
+            app:setPrice="@{mainViewModel.realEstateFilter.minMaxPrice[0]}" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filter_sheet_dialog_rs_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:stepSize="10000"
+            android:valueFrom="@{ConstantsKt.MIN_PRICE}"
+            android:valueTo="@{ConstantsKt.MAX_PRICE}"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_tv_max_price"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_tv_min_price"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_price"
+            app:values="@={mainViewModel.realEstateFilter.minMaxPrice}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_max_price"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_rs_price"
+            app:layout_constraintTop_toTopOf="@id/filter_sheet_dialog_rs_price"
+            app:setPrice="@{mainViewModel.realEstateFilter.minMaxPrice[1]}"
+            tools:text="+ $500,000" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_title_size"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:text="@string/filter_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rs_price" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_min_size"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_size"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_rs_size"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_rs_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_size"
+            app:setSize="@{mainViewModel.realEstateFilter.minMaxSize[0]}" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filter_sheet_dialog_rs_size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:stepSize="20"
+            android:valueFrom="@{ConstantsKt.MIN_SIZE}"
+            android:valueTo="@{ConstantsKt.MAX_SIZE}"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_tv_max_size"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_tv_min_size"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_size"
+            app:values="@={mainViewModel.realEstateFilter.minMaxSize}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_max_size"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_rs_size"
+            app:layout_constraintTop_toTopOf="@id/filter_sheet_dialog_rs_size"
+            app:setSize="@{mainViewModel.realEstateFilter.minMaxSize[1]}"
+            tools:text="+ 300m" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_title_photo"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:text="@string/filter_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rs_size" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_min_photo"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_photo"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_rs_photo"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_rs_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_photo"
+            app:photo_count="@{mainViewModel.realEstateFilter.minMaxPhoto[0]}" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filter_sheet_dialog_rs_photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:stepSize="1"
+            android:valueFrom="@{ConstantsKt.MIN_PHOTO}"
+            android:valueTo="@{ConstantsKt.MAX_PHOTO}"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_tv_max_photo"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_tv_min_photo"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_photo"
+            app:values="@={mainViewModel.realEstateFilter.minMaxPhoto}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_max_photo"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sheet_dialog_rs_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_rs_photo"
+            app:layout_constraintTop_toTopOf="@id/filter_sheet_dialog_rs_photo"
+            app:photo_count="@{mainViewModel.realEstateFilter.minMaxPhoto[1]}"
+            tools:text="+ 5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_min_entry_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_button_max_entry_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rs_photo"
+            app:textMinEntryDateButton="@{mainViewModel.realEstateFilter.minEntryDate}"
+            tools:text="Add min entry date" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_max_entry_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_button_min_entry_date"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rs_photo"
+            app:textMaxEntryDateButton="@{mainViewModel.realEstateFilter.maxEntryDate}"
+            tools:text="Add max entry date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_min_entry_date"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_button_min_entry_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_button_min_entry_date"
+            app:setDate="@{mainViewModel.realEstateFilter.minEntryDate}"
+            tools:text="02/12/2018" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_max_entry_date"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_button_max_entry_date"
+            app:layout_constraintStart_toStartOf="@id/filter_sheet_dialog_button_max_entry_date"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_button_max_entry_date"
+            app:setDate="@{mainViewModel.realEstateFilter.maxEntryDate}"
+            tools:text="N/A" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_min_sale_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_min_entry_date"
+            app:textMinSaleDateButton="@{mainViewModel.realEstateFilter.minSaleDate}"
+            tools:text="Add min sale date" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_max_sale_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filter_sheet_dialog_button_min_sale_date"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_min_entry_date"
+            app:textMaxSaleDateButton="@{mainViewModel.realEstateFilter.maxSaleDate}"
+            tools:text="Add max sale date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_min_sale_date"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_button_min_sale_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_button_min_sale_date"
+            app:setDate="@{mainViewModel.realEstateFilter.minSaleDate}"
+            tools:text="02/12/2018" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_max_sale_date"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_small"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:layout_constraintStart_toStartOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:setDate="@{mainViewModel.realEstateFilter.maxSaleDate}"
+            tools:text="02/05/2021" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_sheet_dialog_tv_title_near_by_interest"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_large"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:paddingTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:text="@string/filter_near_by_interest"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_rv_interest"
+            app:layout_constraintStart_toStartOf="@id/filter_sheet_dialog_rv_interest"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_max_sale_date" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filter_sheet_dialog_rv_interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_tv_title_near_by_interest" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:onClick="@{() -> mainViewModel.resetFilter()}"
+            android:text="@string/filter_reset"
+            app:layout_constraintEnd_toStartOf="@id/filter_sheet_dialog_button_apply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rv_interest" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_sheet_dialog_button_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:text="@string/filter_apply"
+            app:layout_constraintEnd_toEndOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:layout_constraintStart_toStartOf="@id/filter_sheet_dialog_button_max_sale_date"
+            app:layout_constraintTop_toBottomOf="@id/filter_sheet_dialog_rv_interest" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

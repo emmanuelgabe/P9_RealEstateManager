@@ -1,16 +1,12 @@
 package com.openclassrooms.realestatemanager.domain.models
 
 import android.net.Uri
-import com.openclassrooms.realestatemanager.domain.utils.DateUtil
-import com.openclassrooms.realestatemanager.utils.DATE_FORMAT_ENTRY_DATE
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Create by Emmanuel gabé on 17/09/2021.
  */
-class RealEstateFactory
-constructor(private val dateUtil: DateUtil = DateUtil(SimpleDateFormat(DATE_FORMAT_ENTRY_DATE))) {
+class RealEstateFactory {
     fun createRealEstate(
         id: String? = null,
         type: RealEstateType? = null,
@@ -27,8 +23,8 @@ constructor(private val dateUtil: DateUtil = DateUtil(SimpleDateFormat(DATE_FORM
         mapPhoto: Uri? = null,
         lat: Double? = null,
         lng: Double? = null,
-        entryDate: String? = null,
-        saleDate: String? = null,
+        entryDate: Date? = null,
+        saleDate: Date? = null,
         realEstateAgent: String? = null,
         nearbyInterest: MutableList<NearbyInterest>? = null,
         photosUri: List<Uri>? = null,
@@ -52,10 +48,10 @@ constructor(private val dateUtil: DateUtil = DateUtil(SimpleDateFormat(DATE_FORM
             mapPhoto = mapPhoto,
             lat = lat,
             lng = lng,
-            entryDate = entryDate ?: dateUtil.getCurrentTimestamp(),
-            saleDate = saleDate ?: "",
+            entryDate = entryDate ?: Calendar.getInstance().time,
+            saleDate = saleDate,
             realEstateAgent = realEstateAgent,
-            nearbyInterest = nearbyInterest ?: mutableListOf<NearbyInterest>(),
+            nearbyInterest = nearbyInterest ?: mutableListOf(),
             photos = createPhotoList(photosUri ?: emptyList(), photosDescription ?: emptyList())
         )
     }
@@ -65,7 +61,7 @@ constructor(private val dateUtil: DateUtil = DateUtil(SimpleDateFormat(DATE_FORM
     ): MutableList<Photo> {
         val list = mutableListOf<Photo>()
         for ((index, photoUri) in photosUri.withIndex()) {
-            val photo = Photo(photoUri, photosDescription.get(index), false)
+            val photo = Photo(photoUri, photosDescription[index], false)
             list.add(photo)
         }
         return list

@@ -7,10 +7,7 @@ import com.openclassrooms.realestatemanager.data.local.RealEstateDatabase
 import com.openclassrooms.realestatemanager.data.remote.GeoCodingAPI
 import com.openclassrooms.realestatemanager.data.repository.RealEstateRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.repository.RealEstateRepository
-import com.openclassrooms.realestatemanager.domain.usecase.GetRealEstates
-import com.openclassrooms.realestatemanager.domain.usecase.InsertRealEstate
-import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
-import com.openclassrooms.realestatemanager.domain.usecase.UpdateRealEstate
+import com.openclassrooms.realestatemanager.domain.usecase.*
 import com.openclassrooms.realestatemanager.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -50,7 +47,8 @@ object RealEstateModule {
         return RealEstateUseCases(
             getRealEstates = GetRealEstates(repository),
             insertRealEstate = InsertRealEstate(repository),
-            updateRealEstate = UpdateRealEstate(repository)
+            updateRealEstate = UpdateRealEstate(repository),
+            getFilteredRealEState = GetFilteredRealEstates(repository)
         )
     }
 

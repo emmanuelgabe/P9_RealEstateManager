@@ -5,14 +5,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,13 +36,13 @@ class RealEstateUpdateViewModel @Inject constructor(
     fun onEvent(event: UpdateRealEstateEvent) {
         when (event) {
             is UpdateRealEstateEvent.UpdateRealEstate -> {
-                viewModelScope.launch {
-                    try {
+                CoroutineScope(Dispatchers.IO).launch {
+                  try {
                         realEstateUseCases.updateRealEstate(realEstate.value!!)
-                        _eventFlow.emit(UIEvent.ShowSnackbar("The real estate has been correctly updated"))
+                        _eventFlow.emit(UIEvent.ShowSnackBar("The real estate has been correctly updated"))
                         _eventFlow.emit(UIEvent.RealEstateUpdated)
                     } catch (e: Exception) {
-                        _eventFlow.emit(UIEvent.ShowSnackbar("Error save $e"))
+                        _eventFlow.emit(UIEvent.ShowSnackBar("Error save $e"))
                         Log.e("ERROR SAVE", "ERROR SAVE $e")
                     }
                 }
@@ -68,12 +70,12 @@ class RealEstateUpdateViewModel @Inject constructor(
         _realEstate.value!!.photos.remove(photo)
     }
 
-    fun updateSaleDate(saledate: String) {
-        _realEstate.value = realEstate.value!!.copy(saleDate = saledate)
+    fun updateSaleDate(saleDate: Date?) {
+        _realEstate.value = realEstate.value!!.copy(saleDate = saleDate)
     }
 
     sealed class UIEvent {
         object RealEstateUpdated : UIEvent()
-        data class ShowSnackbar(val message: String) : UIEvent()
+        data class ShowSnackBar(val message: String) : UIEvent()
     }
 }

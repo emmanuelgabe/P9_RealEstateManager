@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.presentation.realestatedetail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -24,9 +23,11 @@ import com.openclassrooms.realestatemanager.data.remote.RequestBuilder
 import com.openclassrooms.realestatemanager.domain.models.Address
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
+import com.openclassrooms.realestatemanager.domain.utils.DateUtil
 import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ExpandableCard
 import com.openclassrooms.realestatemanager.presentation.realestatedetail.components.ImageListItem
 import com.openclassrooms.realestatemanager.presentation.ui.theme.RealEstateManagerComposeTheme
+import java.util.*
 
 
 @Composable
@@ -38,8 +39,6 @@ fun RealEstateDetailScreen(
     RealEstateManagerComposeTheme {
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val state = viewModelDetail.state.value
-            val isTablet = (LocalContext.current.resources.configuration.screenLayout
-                    and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
             val boxWithConstraintsScope = this
             Surface(color = MaterialTheme.colors.background) {
                 Column(
@@ -59,12 +58,11 @@ fun RealEstateDetailScreen(
                                 Text(text = "Media", style = MaterialTheme.typography.h2)
                                 Spacer(modifier = Modifier.height(12.dp))
                                 ImageListItem(
-                                    isTablet = isTablet,
                                     photos = realEstate.photos,
                                     onImageClick = {
                                     })
                                 Spacer(modifier = Modifier.height(12.dp))
-                                if (isTablet) SpacerTablet()
+                                if (booleanResource(R.bool.is_tablet)) SpacerTablet()
                             }
                             Text(text = "Information", style = MaterialTheme.typography.h2)
                             Spacer(modifier = Modifier.height(12.dp))
@@ -82,15 +80,14 @@ fun RealEstateDetailScreen(
                                 realEstateAgent = realEstate.realEstateAgent!!
                             )
                             Spacer(modifier = Modifier.height(12.dp))
-                            if (isTablet) SpacerTablet()
+                            if (booleanResource(R.bool.is_tablet)) SpacerTablet()
                             Text(text = "Location", style = MaterialTheme.typography.h2)
                             Spacer(modifier = Modifier.height(12.dp))
                             RealEstateLocation(
-                                isTablet,
                                 realEstate.address!!, realEstate.lat, realEstate.lng
                             )
                             Spacer(modifier = Modifier.height(12.dp))
-                            if (isTablet) SpacerTablet()
+                            if (booleanResource(R.bool.is_tablet)) SpacerTablet()
                             Button(
                                 onClick = {
                                     onNavigate(R.id.action_global_realEstateUpdateFragment)
@@ -137,8 +134,8 @@ fun RealEstateInformation(
     description: String,
     size: String,
     rooms: String,
-    entryDate: String,
-    saleDate: String?,
+    entryDate: Date,
+    saleDate: Date?,
     realEstateAgent: String
 ) {
     Column {
@@ -191,9 +188,9 @@ fun RealEstateInformation(
             }
         }
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "Entry on ${entryDate.dropLast(8)}", Modifier.padding(end = 16.dp))
-        if (!saleDate.isNullOrBlank()) {
-            Text(text = "Sold on $saleDate")
+        Text(text = "Entry on ${DateUtil.formatDate(entryDate)}", Modifier.padding(end = 16.dp))
+        if (saleDate != null) {
+            Text(text = "Sold on ${DateUtil.formatDate(saleDate)}")
         } else {
             Text(text = "Status: Available")
         }
@@ -210,7 +207,7 @@ fun RealEstateInformation(
 }
 
 @Composable
-fun RealEstateLocation(isTablet: Boolean, address: Address, lat: Double?, lng: Double?) {
+fun RealEstateLocation(address: Address, lat: Double?, lng: Double?) {
 
     Text(text = "${address.streetNumber} ${address.streetName}")
     Text(text = "${address.postalCode} ${address.city}")
@@ -221,7 +218,7 @@ fun RealEstateLocation(isTablet: Boolean, address: Address, lat: Double?, lng: D
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (lat != null && lng != null) {
-            val mapSize = if (isTablet) 400.dp else 200.dp
+            val mapSize = if (booleanResource(R.bool.is_tablet)) 400.dp else 200.dp
             Card(
                 modifier = Modifier
                     .size(mapSize),

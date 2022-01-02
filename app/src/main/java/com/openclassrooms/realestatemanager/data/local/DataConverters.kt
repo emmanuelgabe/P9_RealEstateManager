@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.openclassrooms.realestatemanager.domain.models.Address
 import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
+import java.util.*
 
 @ProvidedTypeConverter
 class DataConverter {
@@ -95,5 +96,15 @@ class DataConverter {
             val type = object : TypeToken<List<NearbyInterest>>() {}.type
             Gson().fromJson(value, type)
         }
+    }
+
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
     }
 }

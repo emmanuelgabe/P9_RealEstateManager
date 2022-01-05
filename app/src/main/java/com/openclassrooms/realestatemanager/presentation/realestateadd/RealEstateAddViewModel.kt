@@ -5,6 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.openclassrooms.realestatemanager.data.remote.AddressPositionNotFoundException
+import com.openclassrooms.realestatemanager.data.remote.RemoteConstants.NETWORK_TIMEOUT
+import com.openclassrooms.realestatemanager.data.remote.RemoteErrors.ERROR_POSITION_NOT_FOUND
+import com.openclassrooms.realestatemanager.data.remote.RemoteErrors.NETWORK_ERROR_CONNECTION
+import com.openclassrooms.realestatemanager.data.remote.RemoteErrors.NETWORK_ERROR_UNKNOWN
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.models.RealEstateFactory
@@ -14,6 +19,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,11 +40,15 @@ class RealEstateAddViewModel @Inject constructor(
         when (event) {
             is AddRealEstateEvent.SaveRealEstate -> {
                 viewModelScope.launch {
+                    getGeocoding()
                     try {
                         realEstateUseCases.insertRealEstate(realEstate.value!!)
-                        _eventFlow.emit(UIEvent.ShowSnackBar("real estate added"))
+                        if (realEstate.value!!.lat != null && realEstate.value!!.lng != null) {
+                            _eventFlow.emit(UIEvent.ShowSnackBar("real estate has been correctly added"))
+                        }
                         _eventFlow.emit(UIEvent.RealEstateAdded)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         _eventFlow.emit(UIEvent.ShowSnackBar("Error save $e"))
                         Log.e("ERROR SAVE", "ERROR SAVE $e")
                     }
@@ -45,10 +57,31 @@ class RealEstateAddViewModel @Inject constructor(
         }
     }
 
+    private suspend fun getGeocoding() {
+        try {
+            withTimeout(NETWORK_TIMEOUT) {
+                val location =
+                    realEstateUseCases.getGeocoding(realEstate.value!!.address!!)
+                realEstate.value!!.lat = location.latitude
+                realEstate.value!!.lng = location.longitude
+            }
+        } catch (e: AddressPositionNotFoundException) {
+            Log.e("ERROR GEOCODING", "$e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(ERROR_POSITION_NOT_FOUND))
+        } catch (e: HttpException) {
+            Log.e("ERROR GEOCODING", "ERROR GEOCODING $e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(NETWORK_ERROR_UNKNOWN))
+        } catch (e: IOException) {
+            Log.e("ERROR GEOCODING", "ERROR GEOCODING $e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(NETWORK_ERROR_CONNECTION))
+        }
+    }
+
     init {
         _realEstate.value =
             RealEstateFactory().createRealEstate(
-                status = RealEstateStatus.AVAILABLE)
+                status = RealEstateStatus.AVAILABLE
+            )
     }
 
     fun removePhoto(photo: Photo) {

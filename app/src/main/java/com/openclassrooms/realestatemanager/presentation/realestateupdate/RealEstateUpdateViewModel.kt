@@ -5,15 +5,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.openclassrooms.realestatemanager.data.remote.AddressPositionNotFoundException
+import com.openclassrooms.realestatemanager.data.remote.RemoteConstants
+import com.openclassrooms.realestatemanager.data.remote.RemoteErrors
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -37,16 +40,39 @@ class RealEstateUpdateViewModel @Inject constructor(
         when (event) {
             is UpdateRealEstateEvent.UpdateRealEstate -> {
                 CoroutineScope(Dispatchers.IO).launch {
-                  try {
+                    try {
+                        updateGeocoding()
                         realEstateUseCases.updateRealEstate(realEstate.value!!)
-                        _eventFlow.emit(UIEvent.ShowSnackBar("The real estate has been correctly updated"))
+                        if (realEstate.value!!.lat != null && realEstate.value!!.lng != null) {
+                            _eventFlow.emit(UIEvent.ShowSnackBar("The real estate has been correctly updated"))
+                        }
                         _eventFlow.emit(UIEvent.RealEstateUpdated)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         _eventFlow.emit(UIEvent.ShowSnackBar("Error save $e"))
                         Log.e("ERROR SAVE", "ERROR SAVE $e")
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun updateGeocoding() {
+        try {
+            withTimeout(RemoteConstants.NETWORK_TIMEOUT) {
+                val location = realEstateUseCases.getGeocoding(realEstate.value!!.address!!)
+                realEstate.value!!.lat = location.latitude
+                realEstate.value!!.lng = location.longitude
+            }
+        } catch (e: AddressPositionNotFoundException) {
+            Log.e("ERROR GEOCODING", "$e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(RemoteErrors.ERROR_POSITION_NOT_FOUND))
+        } catch (e: HttpException) {
+            Log.e("ERROR GEOCODING", "ERROR GEOCODING $e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(RemoteErrors.NETWORK_ERROR_UNKNOWN))
+        } catch (e: IOException) {
+            Log.e("ERROR GEOCODING", "ERROR GEOCODING $e")
+            _eventFlow.emit(UIEvent.ShowSnackBar(RemoteErrors.NETWORK_ERROR_CONNECTION))
         }
     }
 

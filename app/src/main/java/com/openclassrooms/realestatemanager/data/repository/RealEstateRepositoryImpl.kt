@@ -27,16 +27,10 @@ class RealEstateRepositoryImpl(
     }
 
     override suspend fun insertRealEstate(realEstate: RealEstate) {
-   /*     val geoCoding = geoCodingApi.getGeoCoding(getStringAddress(realEstate.address!!))
-        realEstate.lat = geoCoding.results[0].geometry.location.lat
-        realEstate.lng = geoCoding.results[0].geometry.location.lng*/
         realEstateDao.insertRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
     }
 
     override suspend fun updateRealEstate(realEstate: RealEstate) {
-/*        val geoCoding = geoCodingApi.getGeoCoding(getStringAddress(realEstate.address!!))
-        realEstate.lat = geoCoding.results[0].geometry.location.lat
-        realEstate.lng = geoCoding.results[0].geometry.location.lng*/
         realEstateDao.updateRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
     }
 

@@ -6,7 +6,8 @@ const val KEY_BUNDLE_REAL_ESTATE = "realestate"
 // Date format
 const val DATE_FORMAT = "yyyy.MM.dd"
 
-// Table name
+// local data
+const val DATABASE_NAME = "real_estate_db"
 const val REAL_ESTATE_TABLE_NAME = "real_estate_table"
 
 // Maps BASE URL
@@ -37,3 +38,7 @@ const val MIN_ENTRY_DATE_TAG = "MIN_ENTRY_DATE"
 const val MAX_ENTRY_DATE_TAG = "MAX_ENTRY_DATE"
 const val MIN_SALE_DATE_TAG = "MIN_SALE_DATE"
 const val MAX_SALE_DATE_TAG = "MAX_SALE_DATE"
+
+// CONTENT PROVIDER
+const val AUTHORITY = "com.openclassrooms.realestatemanager.data.local.provider"
+const val URI_PATH = "content://$AUTHORITY"

@@ -1,8 +1,6 @@
 package com.openclassrooms.realestatemanager.di
 
 import android.app.Application
-import androidx.room.Room
-import com.openclassrooms.realestatemanager.data.local.DataConverter
 import com.openclassrooms.realestatemanager.data.local.RealEstateDatabase
 import com.openclassrooms.realestatemanager.data.remote.GeoCodingAPI
 import com.openclassrooms.realestatemanager.data.repository.RealEstateRepositoryImpl
@@ -33,12 +31,7 @@ object RealEstateModule {
     @Provides
     @Singleton
     fun provideRealEstateDatabase(app: Application): RealEstateDatabase {
-        return Room.databaseBuilder(
-            app,
-            RealEstateDatabase::class.java,
-            RealEstateDatabase.DATABASE_NAME
-        ).addTypeConverter(DataConverter())
-            .build()
+        return RealEstateDatabase.getRealEstateDatabase(app.applicationContext)
     }
 
     @Provides
@@ -48,7 +41,8 @@ object RealEstateModule {
             getRealEstates = GetRealEstates(repository),
             insertRealEstate = InsertRealEstate(repository),
             updateRealEstate = UpdateRealEstate(repository),
-            getFilteredRealEState = GetFilteredRealEstates(repository)
+            getFilteredRealEState = GetFilteredRealEstates(repository),
+            getGeocoding = GetGeocoding(repository)
         )
     }
 

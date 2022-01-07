@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.di
 
 import android.app.Application
+import com.openclassrooms.realestatemanager.data.local.LocalDataSource
 import com.openclassrooms.realestatemanager.data.local.RealEstateDatabase
 import com.openclassrooms.realestatemanager.data.remote.GeoCodingAPI
 import com.openclassrooms.realestatemanager.data.repository.RealEstateRepositoryImpl
@@ -22,10 +23,18 @@ object RealEstateModule {
     @Provides
     @Singleton
     fun provideRealEstateRepository(
-        db: RealEstateDatabase,
-        geoCodingApi: GeoCodingAPI
+        geoCodingApi: GeoCodingAPI,
+        localDataSource: LocalDataSource
     ): RealEstateRepository {
-        return RealEstateRepositoryImpl(db.realEstateDao, geoCodingApi)
+        return RealEstateRepositoryImpl(geoCodingApi, localDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(
+        db: RealEstateDatabase
+    ): LocalDataSource {
+        return LocalDataSource(db.realEstateDao)
     }
 
     @Provides

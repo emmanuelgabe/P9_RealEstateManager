@@ -1,7 +1,7 @@
 package com.openclassrooms.realestatemanager.data.repository
 
 import android.location.Location
-import com.openclassrooms.realestatemanager.data.local.RealEstateDao
+import com.openclassrooms.realestatemanager.data.local.LocalDataSource
 import com.openclassrooms.realestatemanager.data.local.entity.RealEstateEntity
 import com.openclassrooms.realestatemanager.data.remote.AddressPositionNotFoundException
 import com.openclassrooms.realestatemanager.data.remote.GeoCodingAPI
@@ -13,51 +13,28 @@ import com.openclassrooms.realestatemanager.domain.models.RealEstateFilter
 import com.openclassrooms.realestatemanager.domain.repository.RealEstateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.util.*
-
 
 class RealEstateRepositoryImpl(
-    private val realEstateDao: RealEstateDao, private val geoCodingApi: GeoCodingAPI
+    private val geoCodingApi: GeoCodingAPI,
+    private val localDataSource: LocalDataSource
 ) : RealEstateRepository {
 
     override fun getAllRealEstate(): Flow<List<RealEstate>> {
-        return realEstateDao.getAllRealEstates().map { realEstates ->
+        return localDataSource.getAllRealEstates().map { realEstates ->
             realEstates.map { it.entityToRealEstate() }
         }
     }
 
     override suspend fun insertRealEstate(realEstate: RealEstate) {
-        realEstateDao.insertRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
+        localDataSource.insertRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
     }
 
     override suspend fun updateRealEstate(realEstate: RealEstate) {
-        realEstateDao.updateRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
+        localDataSource.updateRealEstate(RealEstateEntity.realEstateToRealEStateEntity(realEstate))
     }
 
     override fun getFilteredRealEstate(realEstateFilter: RealEstateFilter): Flow<List<RealEstate>> {
-        if (realEstateFilter.minSaleDate != null || realEstateFilter.maxSaleDate != null) {
-            return realEstateDao.getFilteredRealEstates(
-                realEstateFilter.minPrice,
-                realEstateFilter.maxPrice,
-                realEstateFilter.minSize,
-                realEstateFilter.maxSize,
-                realEstateFilter.minEntryDate,
-                realEstateFilter.maxEntryDate,
-                realEstateFilter.minSaleDate ?: Date(0),
-                realEstateFilter.maxSaleDate ?: Date(Long.MAX_VALUE),
-                realEstateFilter.city
-            ).map { realEstates ->
-                realEstates.map { it.entityToRealEstate() }
-            }
-        } else return realEstateDao.getFilteredRealEstates(
-            realEstateFilter.minPrice,
-            realEstateFilter.maxPrice,
-            realEstateFilter.minSize,
-            realEstateFilter.maxSize,
-            realEstateFilter.minEntryDate,
-            realEstateFilter.maxEntryDate,
-            realEstateFilter.city
-        ).map { realEstates ->
+        return localDataSource.getFilteredRealEstates(realEstateFilter).map { realEstates ->
             realEstates.map { it.entityToRealEstate() }
         }
     }

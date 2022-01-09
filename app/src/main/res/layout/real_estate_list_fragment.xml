@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_fragment_recycler_view"
+    android:id="@+id/list_fragment_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListFragment"
-    tools:itemCount="4"
-    tools:listitem="@layout/real_estate_item" />
+    android:layout_height="match_parent">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/list_fragment_button_toggle_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        app:checkedButton="@id/list_fragment_button_list">
+
+        <Button
+            android:id="@+id/list_fragment_button_list"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/real_estate_list_button_list" />
+
+        <Button
+            android:id="@+id/list_fragment_button_map"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/real_estate_list_button_map" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_fragment_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_fragment_button_toggle_group"
+        android:layout_marginTop="47dp"
+        tools:context="com.openclassrooms.realestatemanager.presentation.realestatelist.RealEstateListFragment"
+        tools:itemCount="4"
+        tools:listitem="@layout/real_estate_item" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/list_fragment_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/list_fragment_button_toggle_group"
+        android:layout_marginTop="47dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

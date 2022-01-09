@@ -55,4 +55,6 @@
     <string name="filter_edit_min_sale_date">Edit min sale date</string>
     <string name="filter_add_max_sale_date">Add max sale date</string>
     <string name="filter_edit_max_sale_date">Edit max sale date</string>
+    <string name="real_estate_list_button_list">List</string>
+    <string name="real_estate_list_button_map">Map</string>
 </resources>

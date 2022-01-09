@@ -42,3 +42,7 @@ const val MAX_SALE_DATE_TAG = "MAX_SALE_DATE"
 // CONTENT PROVIDER
 const val AUTHORITY = "com.openclassrooms.realestatemanager.data.local.provider"
 const val URI_PATH = "content://$AUTHORITY"
+
+// MAPS
+const val MAP_ZOOM = 15f
+const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"

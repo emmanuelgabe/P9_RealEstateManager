@@ -26,10 +26,7 @@ class RealEstateContentProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor {
-
-        val realEstateId = uri.lastPathSegment
-
-        if (realEstateId != null && context != null) {
+        if (context != null) {
             val cursor: Cursor =
                 RealEstateDatabase.getRealEstateDatabase(context!!).realEstateDao.getAllRealEstatesWithCursor()
             cursor.setNotificationUri(context!!.contentResolver, uri)

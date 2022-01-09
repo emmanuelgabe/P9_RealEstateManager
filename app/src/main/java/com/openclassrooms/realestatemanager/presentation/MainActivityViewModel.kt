@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.presentation
 
+import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
@@ -33,6 +34,9 @@ class MainActivityViewModel
 
     private val _filterEventFlow = MutableSharedFlow<FilterEvent>()
     val filterEventFlow = _filterEventFlow.asSharedFlow()
+
+    private var _lastKnownLocation: MutableStateFlow<Location?> = MutableStateFlow(null)
+    val lastKnownLocation = _lastKnownLocation.asStateFlow()
 
     private var getRealEstatesJob: Job? = null
 
@@ -103,6 +107,10 @@ class MainActivityViewModel
     fun updateNearByInterest(nearbyInterests: List<NearbyInterest>) {
         _realEstateFilter.value.nearbyInterest.clear()
         _realEstateFilter.value.nearbyInterest.addAll(nearbyInterests)
+    }
+
+    fun saveLocation(location: Location?) {
+        _lastKnownLocation.value = location
     }
 
     sealed class UIEvent {

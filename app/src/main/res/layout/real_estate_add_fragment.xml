@@ -13,311 +13,314 @@
     </data>
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".presentation.realestateadd.RealEstateAddFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_fragment_start_end"
-        android:paddingTop="@dimen/margin_padding_size_medium"
-        android:paddingEnd="@dimen/padding_fragment_start_end"
-        android:paddingBottom="@dimen/margin_padding_size_medium">
+        tools:context=".presentation.realestateadd.RealEstateAddFragment">
 
-        <TextView
-            android:id="@+id/real_estate_add_tv_information"
-            style="@style/Headline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/all_title_information"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_type"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="61dp"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:layout_marginEnd="4dp"
-            android:hint="@string/all_type"
-            android:labelFor="@id/real_estate_add_actv_type"
-            app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_tv_information">
-
-            <AutoCompleteTextView
-                android:id="@+id/real_estate_add_actv_type"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:focusable="true"
-                android:focusableInTouchMode="false"
-                android:inputType="none"
-                android:text="@={BindingConverter.realEstateTypeToString(addViewModel.realEstate.type)}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_price"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/real_estate_add_til_type"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_tv_information">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/all_price"
-                android:inputType="numberDecimal"
-                android:text="@={BindingConverter.intToString(addViewModel.realEstate.price)}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_room"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="61dp"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            android:layout_marginEnd="4dp"
-            android:hint="@string/all_room"
-            app:layout_constraintEnd_toStartOf="@+id/real_estate_add_til_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_type">
-
-            <AutoCompleteTextView
-                android:id="@+id/real_estate_add_actv_room"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:focusable="true"
-                android:focusableInTouchMode="false"
-                android:inputType="none"  android:text="@={BindingConverter.intToString(addViewModel.realEstate.room)}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_size"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/real_estate_add_til_room"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_type">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/all_size"
-                android:inputType="numberDecimal"
-                android:text="@={BindingConverter.intToString(addViewModel.realEstate.size)}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_description"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_room">
+            android:paddingStart="@dimen/padding_fragment_start_end"
+            android:paddingTop="@dimen/margin_padding_size_medium"
+            android:paddingEnd="@dimen/padding_fragment_start_end"
+            android:paddingBottom="@dimen/margin_padding_size_medium">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_description"
+            <TextView
+                android:id="@+id/real_estate_add_tv_information"
+                style="@style/Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_title_information"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="4dp"
+                android:hint="@string/all_type"
+                android:labelFor="@id/real_estate_add_actv_type"
+                app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_tv_information">
+
+                <AutoCompleteTextView
+                    android:id="@+id/real_estate_add_actv_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:text="@={BindingConverter.realEstateTypeToString(addViewModel.realEstate.type)}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_price"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/real_estate_add_til_type"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_tv_information">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_price"
+                    android:inputType="numberDecimal"
+                    android:text="@={BindingConverter.intToString(addViewModel.realEstate.price)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_room"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="4dp"
+                android:hint="@string/all_room"
+                app:layout_constraintEnd_toStartOf="@+id/real_estate_add_til_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_type">
+
+                <AutoCompleteTextView
+                    android:id="@+id/real_estate_add_actv_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:text="@={BindingConverter.intToString(addViewModel.realEstate.room)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_size"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/real_estate_add_til_room"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_type">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_size"
+                    android:inputType="numberDecimal"
+                    android:text="@={BindingConverter.intToString(addViewModel.realEstate.size)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_description"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:maxLength="300"
-                android:maxLines="3"
-                android:text="@={addViewModel.realEstate.description}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_room">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_nearby_interest"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            android:hint="@string/all_nearby_interest"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_description">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_description"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLength="300"
+                    android:maxLines="3"
+                    android:text="@={addViewModel.realEstate.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <MultiAutoCompleteTextView
-                android:id="@+id/real_estate_add_mactv_nearby_interest"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_nearby_interest"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:inputType="none|textNoSuggestions"
-                android:text="@={BindingConverter.nearbyInterestToString(addViewModel.realEstate.nearbyInterest)}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="61dp"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:hint="@string/all_nearby_interest"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_description">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_real_estate_agent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_nearby_interest">
+                <MultiAutoCompleteTextView
+                    android:id="@+id/real_estate_add_mactv_nearby_interest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none|textNoSuggestions"
+                    android:text="@={BindingConverter.nearbyInterestToString(addViewModel.realEstate.nearbyInterest)}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_real_estate_agent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/all_real_estate_agent"
-                android:text="@={addViewModel.realEstate.realEstateAgent}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/real_estate_add_button_add_picture"
-            style="@style/Button"
-            android:layout_marginTop="@dimen/margin_padding_size_large"
-            android:layout_marginEnd="4dp"
-            android:text="@string/all_add_picture"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_real_estate_agent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/real_estate_add_rv_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_button_add_picture"
-            tools:listitem="@layout/photo_item"
-            tools:itemCount="1"/>
-
-        <TextView
-            android:id="@+id/real_estate_add_tv_address"
-            style="@style/Headline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:text="@string/all_title_address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_rv_photo" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_street_number"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_street_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_tv_address">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_street_tiet_number"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_real_estate_agent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_street_number"
-                android:inputType="numberDecimal"
-                android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.streetNumber)}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_nearby_interest">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_street_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/real_estate_add_til_street_number"
-            app:layout_constraintTop_toTopOf="@id/real_estate_add_til_street_number">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_real_estate_agent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_real_estate_agent"
+                    android:text="@={addViewModel.realEstate.realEstateAgent}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_street_tiet_name"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/real_estate_add_button_add_picture"
+                style="@style/Button"
+                android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginEnd="4dp"
+                android:text="@string/all_add_picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_real_estate_agent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/real_estate_add_rv_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_street_name"
-                android:inputType="text"
-                android:text="@={addViewModel.realEstate.address.streetName}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_button_add_picture"
+                tools:itemCount="1"
+                tools:listitem="@layout/photo_item" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_postal_code"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_city"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_street_name">
+            <TextView
+                android:id="@+id/real_estate_add_tv_address"
+                style="@style/Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:text="@string/all_title_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_rv_photo" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_postal_tiet_postal_code"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_street_number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_street_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_tv_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_street_tiet_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_street_number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
+                    android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.streetNumber)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_street_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/real_estate_add_til_street_number"
+                app:layout_constraintTop_toTopOf="@id/real_estate_add_til_street_number">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_street_tiet_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_street_name"
+                    android:inputType="text"
+                    android:text="@={addViewModel.realEstate.address.streetName}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_postal_code"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toStartOf="@id/real_estate_add_til_city"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_street_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_postal_tiet_postal_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_postal_code"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
+                    android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.postalCode)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_city"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/real_estate_add_til_postal_code"
+                app:layout_constraintTop_toTopOf="@id/real_estate_add_til_postal_code">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_city"
+                    android:inputType="text"
+                    android:text="@={addViewModel.realEstate.address.city}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/real_estate_add_til_country"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/all_postal_code"
-                android:inputType="numberDecimal"
-                android:text="@={BindingConverter.intToString(addViewModel.realEstate.address.postalCode)}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_city">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_city"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/real_estate_add_til_postal_code"
-            app:layout_constraintTop_toTopOf="@id/real_estate_add_til_postal_code">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/real_estate_add_tiet_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/all_country"
+                    android:inputType="text"
+                    android:text="@={addViewModel.realEstate.address.country}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/all_city"
-                android:inputType="text"
-                android:text="@={addViewModel.realEstate.address.city}" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/real_estate_add_button_add"
+                style="@style/Button"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:text="@string/all_add_real_estate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_country" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/real_estate_add_til_country"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_padding_size_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/real_estate_add_til_city">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/real_estate_add_tiet_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/all_country"
-                android:inputType="text"
-                android:text="@={addViewModel.realEstate.address.country}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/real_estate_add_button_add"
-            style="@style/Button"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="@dimen/margin_padding_size_large"
-            android:layout_marginBottom="@dimen/margin_padding_size_medium"
-            android:text="@string/all_add_real_estate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/real_estate_add_til_country" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

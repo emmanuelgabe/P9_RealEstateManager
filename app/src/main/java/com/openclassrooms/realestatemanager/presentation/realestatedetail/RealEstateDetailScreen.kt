@@ -21,6 +21,7 @@ import coil.compose.rememberImagePainter
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.data.remote.RequestBuilder
 import com.openclassrooms.realestatemanager.domain.models.Address
+import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
 import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
 import com.openclassrooms.realestatemanager.domain.utils.DateUtil
@@ -77,7 +78,8 @@ fun RealEstateDetailScreen(
                                 rooms = realEstate.room.toString(),
                                 entryDate = realEstate.entryDate,
                                 saleDate = realEstate.saleDate,
-                                realEstateAgent = realEstate.realEstateAgent!!
+                                realEstateAgent = realEstate.realEstateAgent!!,
+                                nearbyInterest = realEstate.nearbyInterest
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             if (booleanResource(R.bool.is_tablet)) SpacerTablet()
@@ -136,7 +138,8 @@ fun RealEstateInformation(
     rooms: String,
     entryDate: Date,
     saleDate: Date?,
-    realEstateAgent: String
+    realEstateAgent: String,
+    nearbyInterest: List<NearbyInterest>
 ) {
     Column {
         Row(
@@ -188,6 +191,11 @@ fun RealEstateInformation(
             }
         }
         Spacer(modifier = Modifier.height(12.dp))
+        if (nearbyInterest.isNotEmpty()) Text(
+            text = "Nearby interest: ${
+                nearbyInterest.toString().lowercase().replace("[", "").replace("]", "")
+            }"
+        )
         Text(text = "Entry on ${DateUtil.formatDate(entryDate)}", Modifier.padding(end = 16.dp))
         if (saleDate != null) {
             Text(text = "Sold on ${DateUtil.formatDate(saleDate)}")
@@ -213,26 +221,32 @@ fun RealEstateLocation(address: Address, lat: Double?, lng: Double?) {
     Text(text = "${address.postalCode} ${address.city}")
     Text(text = address.country!!)
     Spacer(modifier = Modifier.height(12.dp))
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (lat != null && lng != null) {
-            val mapSize = if (booleanResource(R.bool.is_tablet)) 400.dp else 200.dp
-            Card(
-                modifier = Modifier
-                    .size(mapSize),
-                shape = MaterialTheme.shapes.large,
-                border = BorderStroke(1.dp, Color.Gray),
-                elevation = 2.dp
-            ) {
-                Image(
+    if (lat != null && lng != null) {
+        BoxWithConstraints(
+            Modifier
+                .fillMaxSize()
+        ) {
+            if (lat != null && lng != null) {
+                val mapSize: Dp = if (booleanResource(R.bool.is_tablet)) maxWidth.div(1.3f) else maxWidth
+                Card(
                     modifier = Modifier
-                        .size(mapSize),
-                    painter = rememberImagePainter(RequestBuilder.mapsStaticAPIUrl(lat, lng)),
-                    contentDescription = "map location",
-                    contentScale = ContentScale.Crop
-                )
+                        .height(mapSize)
+                        .width(mapSize)
+                        .align(Alignment.Center),
+                    shape = MaterialTheme.shapes.large,
+                    border = BorderStroke(1.dp, Color.Gray),
+                    elevation = 2.dp
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .height(mapSize)
+                            .width(mapSize)
+                            .align(Alignment.Center),
+                        painter = rememberImagePainter(RequestBuilder.mapsStaticAPIUrl(lat, lng)),
+                        contentDescription = "map location",
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
         }
     }

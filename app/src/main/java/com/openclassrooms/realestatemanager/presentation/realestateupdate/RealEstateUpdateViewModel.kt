@@ -10,6 +10,7 @@ import com.openclassrooms.realestatemanager.data.remote.RemoteConstants
 import com.openclassrooms.realestatemanager.data.remote.RemoteErrors
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstate
+import com.openclassrooms.realestatemanager.domain.models.RealEstateStatus
 import com.openclassrooms.realestatemanager.domain.usecase.RealEstateUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -41,6 +42,7 @@ class RealEstateUpdateViewModel @Inject constructor(
             is UpdateRealEstateEvent.UpdateRealEstate -> {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
+                        updateStatus()
                         updateGeocoding()
                         realEstateUseCases.updateRealEstate(realEstate.value!!)
                         if (realEstate.value!!.lat != null && realEstate.value!!.lng != null) {
@@ -54,6 +56,14 @@ class RealEstateUpdateViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun updateStatus() {
+        if (realEstate.value!!.saleDate != null) {
+            realEstate.value!!.status = RealEstateStatus.SOLD
+        } else {
+            realEstate.value!!.status = RealEstateStatus.AVAILABLE
         }
     }
 

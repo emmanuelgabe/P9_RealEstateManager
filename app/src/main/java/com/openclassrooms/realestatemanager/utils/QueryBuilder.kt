@@ -44,12 +44,6 @@ object QueryBuilder {
                 }' "
             )
         }
-        if (realEstateFilter.minPhoto != 0) {
-            TODO("Not yet implemented")
-        }
-        if (realEstateFilter.maxPhoto != MAX_PHOTO) {
-            TODO("Not yet implemented")
-        }
         if (simpleQuery.toString().contains("AND")) {
             simpleQuery.delete(37, 41) // delete firsts AND
         } else {

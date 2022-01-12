@@ -26,6 +26,9 @@ import javax.inject.Inject
 class MainActivityViewModel
 @Inject constructor() : ViewModel() {
 
+    private var _toggleButtonIsMapState = MutableStateFlow(false)
+    val toggleButtonIsMapState = _toggleButtonIsMapState.asStateFlow()
+
     private var _realEstateFilter = MutableStateFlow(FilterBottomSheetDialogViewState())
     val realEstateFilter = _realEstateFilter.asStateFlow()
 
@@ -109,6 +112,9 @@ class MainActivityViewModel
         _realEstateFilter.value.nearbyInterest.addAll(nearbyInterests)
     }
 
+    fun updateToggleButtonState(toggleButtonIsMap: Boolean){
+        _toggleButtonIsMapState.value = toggleButtonIsMap
+    }
     fun saveLocation(location: Location?) {
         _lastKnownLocation.value = location
     }

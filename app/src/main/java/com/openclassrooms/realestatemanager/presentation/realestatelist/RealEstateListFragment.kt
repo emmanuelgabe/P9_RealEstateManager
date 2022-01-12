@@ -120,10 +120,12 @@ class RealEstateListFragment : Fragment(), RealEstateListAdapter.Interaction, On
                     R.id.list_fragment_button_map -> {
                         binding.listFragmentMapView.visibility = View.VISIBLE
                         binding.listFragmentRecyclerView.visibility = View.GONE
+                        mainActivityViewModel.updateToggleButtonState(true)
                     }
                     R.id.list_fragment_button_list -> {
                         binding.listFragmentRecyclerView.visibility = View.VISIBLE
                         binding.listFragmentMapView.visibility = View.GONE
+                        mainActivityViewModel.updateToggleButtonState(false)
                     }
                 }
             }
@@ -164,7 +166,9 @@ class RealEstateListFragment : Fragment(), RealEstateListAdapter.Interaction, On
         val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
             outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
         }
-        mapView.onSaveInstanceState(mapViewBundle)
+        if (::mapView.isInitialized) {
+            mapView.onSaveInstanceState(mapViewBundle)
+        }
     }
 
     @SuppressLint("PotentialBehaviorOverride", "MissingPermission")
@@ -228,6 +232,9 @@ class RealEstateListFragment : Fragment(), RealEstateListAdapter.Interaction, On
         super.onResume()
         mapView.onResume()
         listViewModel.realEstates.value?.let { realEstateAdapter.submitList(it) }
+        if (mainActivityViewModel.toggleButtonIsMapState.value) {
+            binding.listFragmentButtonToggleGroup.check(R.id.list_fragment_button_map)
+        }
     }
 
     override fun onDestroy() {

@@ -1,11 +1,8 @@
 package com.openclassrooms.realestatemanager.domain.models
 
-import com.openclassrooms.realestatemanager.domain.utils.DateUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-
 import org.junit.Test
-import java.text.SimpleDateFormat
 
 /**
  * Create by Emmanuel gabé on 08/10/2021.
@@ -36,7 +33,7 @@ class RealEstateFactoryUnitTest {
         assert(realEstate is RealEstate)
         assertTrue(realEstate.id != null)
         assertTrue( realEstate.entryDate != null)
-        assertEquals("paris",realEstate.address.city)
+        assertEquals("paris", realEstate.address!!.city)
         assertEquals(RealEstateType.APARTMENT,realEstate.type)
         assertEquals(300000,realEstate.price)
     }

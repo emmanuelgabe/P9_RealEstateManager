@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.os.Build.VERSION
 import androidx.test.core.app.ApplicationProvider
+import com.openclassrooms.realestatemanager.utils.Util
 import com.openclassrooms.realestatemanager.utils.Utils.*
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -64,5 +65,15 @@ class UtilsUnitTest {
         val shadowOfActiveNetworkInfo = Shadows.shadowOf(connectivityManager.activeNetworkInfo)
         shadowOfActiveNetworkInfo.setConnectionStatus(NetworkInfo.State.CONNECTED)
         Assert.assertTrue(isInternetAvailable(context))
+    }
+
+    @Test
+    fun removalOfDuplicatesNearbyInterest(){
+        val text: CharSequence = "Train station, Monument, School, School, Park, "
+        var nearByInterestTextListWithoutDuplicate: String = Util.removalOfDuplicates(text)
+        assertEquals("Train station, Monument, Park, ",nearByInterestTextListWithoutDuplicate)
+        // Text without duplicate must remain unchanged
+        nearByInterestTextListWithoutDuplicate = Util.removalOfDuplicates(nearByInterestTextListWithoutDuplicate)
+        assertEquals("Train station, Monument, Park, ",nearByInterestTextListWithoutDuplicate)
     }
 }

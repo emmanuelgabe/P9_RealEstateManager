@@ -2,7 +2,7 @@
 
 RealEstateManager est une application de gestion de bien immobilier destiné à aider les agences immobilières.
 
-![P9_RealEstateManager_image](https://www.zupimages.net/up/22/02/inpd.png)
+![P9_RealEstateManager_image](https://www.zupimages.net/up/22/02/tcv6.png)
 
 # Bibliothèques et technologies utilisées
  - Kotlin

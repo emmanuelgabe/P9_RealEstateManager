@@ -22,7 +22,7 @@ import java.util.*
 class RealEstateContentProviderTest {
 
     private var contentResolver: ContentResolver? = null
-    private val uriRealEstate = "${URI_REAL_ESTATE}/${UUID.randomUUID()}".toUri()
+    private val uriRealEstate = "${URI_REAL_ESTATE}".toUri()
 
     @Before
     fun setUp() {

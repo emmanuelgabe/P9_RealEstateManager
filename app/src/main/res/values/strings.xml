@@ -6,7 +6,7 @@
     <string name="real_estate_update_tv_information_available">Real estate status: Available</string>
     <string name="real_estate_update_tv_information_sold">sold on : </string>
     <string name="real_estate_update_fragment_button_update">Update real estate</string>
-    <string name="real_estate_list_adapter_description">%1s - %2d - room: %3d</string>
+    <string name="real_estate_list_adapter_description">%1s - %2dm² - room: %3d</string>
     <string name="real_estate_list_adapter_price">%1d$</string>
     <string name="real_estate_list_place">%1d %2s %3s</string>
     <string name="photo_description_item_edit_item">edit image</string>
@@ -57,4 +57,7 @@
     <string name="filter_edit_max_sale_date">Edit max sale date</string>
     <string name="real_estate_list_button_list">List</string>
     <string name="real_estate_list_button_map">Map</string>
+    <string name="real_estate_notification_channel_name">Real estate channel</string>
+    <string name="real_estate_notification_channel_description">real estate channel information</string>
+    <string name="real_estate_notification_title">Real estate manager : </string>
 </resources>

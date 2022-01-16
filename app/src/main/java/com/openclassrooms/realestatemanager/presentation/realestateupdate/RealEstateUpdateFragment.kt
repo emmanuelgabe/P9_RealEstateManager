@@ -17,12 +17,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.RealEstateUpdateFragmentBinding
 import com.openclassrooms.realestatemanager.domain.models.NearbyInterest
 import com.openclassrooms.realestatemanager.domain.models.Photo
 import com.openclassrooms.realestatemanager.domain.models.RealEstateType
+import com.openclassrooms.realestatemanager.notification.NotificationHelper
 import com.openclassrooms.realestatemanager.presentation.dialog.*
 import com.openclassrooms.realestatemanager.utils.KEY_BUNDLE_REAL_ESTATE
 import com.openclassrooms.realestatemanager.utils.Util.hideKeyboard
@@ -123,7 +123,7 @@ class RealEstateUpdateFragment : Fragment(), ListPhotoListener, DatePickerListen
                         navController.navigateUp()
                     }
                     is RealEstateUpdateViewModel.UIEvent.ShowSnackBar -> {
-                        Snackbar.make(binding.root, event.message, Snackbar.LENGTH_LONG).show()
+                        NotificationHelper(requireContext(), event.message).showRealEstateNotification()
                     }
                 }
             }

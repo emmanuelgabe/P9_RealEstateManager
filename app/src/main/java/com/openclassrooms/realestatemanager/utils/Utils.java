@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -15,7 +16,6 @@ import java.util.Locale;
 /**
  * Created by Philippe on 21/02/2018.
  */
-
 public class Utils {
 
     public static int convertDollarToEuro(int dollars) {
@@ -31,6 +31,7 @@ public class Utils {
         return dateFormat.format(new Date());
     }
 
+    @SuppressLint("MissingPermission")
     public static Boolean isInternetAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -38,7 +39,8 @@ public class Utils {
             Network network = connectivityManager.getActiveNetwork();
             if (network == null) return false;
             NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
-            return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+            return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
         } else {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnected();

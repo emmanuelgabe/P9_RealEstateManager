@@ -6,7 +6,7 @@ RealEstateManager est une application de gestion de bien immobilier destiné à 
 
 # Bibliothèques et technologies utilisées
  - Kotlin
- - MVVMI
+ - MVI
  - Hilt
  - Navigation Component
  - Jetpack Compose
